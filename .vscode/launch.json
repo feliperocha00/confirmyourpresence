@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Django",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "runserver",
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            // "env": {
+            //     "PYTHONPATH": "${workspaceFolder}/"
+            // },
+            "stopOnEntry": false
+        }
+    ]
+}

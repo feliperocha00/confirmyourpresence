@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} Todas as Confirmações - Django App{% endblock title %}
+{% block content %}
+<ul>
+    {% for confirmation in confirmations %}
+    <li>
+        {{ confirmation.name }}: {% if confirmation.confirm %}Confirmou{% else %} Não Vai{% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
