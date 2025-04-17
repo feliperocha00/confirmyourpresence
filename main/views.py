@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from . import models 
 
 # Create your views here.
@@ -29,10 +30,21 @@ def confirm(request):
             return redirect("success")
     
 
-    return render(request, "confirm.html")
-    
+    return render(request, "confirm.html")    
 
+# Verificação: é superusuário?
+# def is_admin(user):
+    # return user.is_superuser
+
+# @login_required
+# @user_passes_test(is_admin)
 def confirmations(request):
     confirmations = models.Confirm.objects.all()
     return render(request, "confirmations.html", {"confirmations": confirmations})
+
+# @login_required
+# @user_passes_test(is_admin)
+def guests(request):
+    guests = models.Guests.objects.all()
+    return render(request, "guests.html", {"guests": guests})
     
