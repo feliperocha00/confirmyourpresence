@@ -8,6 +8,7 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "runserver",
+                "7000",
             ],
             "console": "integratedTerminal",
             "justMyCode": false,
