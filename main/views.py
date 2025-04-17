@@ -14,11 +14,10 @@ def notfound(request):
 def welcome(request):
     if request.method == "POST":
         form = models.Welcome(request.POST)
-        if form.is_valid():
-            # form.save()
-            return redirect("confirm")
-    # else:
-    #     form = ConfirmacaoPresencaForm()
+        if form.find_number(form.pk.get('Telefone')):
+            return render(request, "confirm.html")
+        else:
+            return redirect("notfound")
 
     return render(request, "welcome.html")
 
