@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from . import models 
+from . import models
 from openpyxl import Workbook
 
 # Create your views here.
@@ -76,3 +76,9 @@ def guests(request):
     guests = models.Guests.objects.all()
     return render(request, "guests.html", {"guests": guests})
     
+def add_guests(request):
+    if request.method == "POST":
+        if models.Guests.import_guests(request.FILES.get('file').file):
+            return redirect("guests")
+    
+    return render(request, "add_guests.html")
