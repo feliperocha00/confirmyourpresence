@@ -24,6 +24,9 @@ class Guests(models.Model):
         related_name='childs'
     )
 
+    def __str__(self):
+        return self.name
+    
 # Create your models here.
 class Confirm(models.Model):
     name = models.CharField("Nome", max_length=200)
@@ -38,3 +41,7 @@ class Confirm(models.Model):
     def __str__(self):
         return self.name
     
+class Confirmations(models.Model):
+    def export(self, confirmations):
+        print("Exportando confirmações...")
+        return Tru
