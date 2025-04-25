@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
 import re
+import csv
 
 class Welcome(models.Model):
     def find_number(self, phone):
@@ -26,8 +27,20 @@ class Guests(models.Model):
 
     def __str__(self):
         return self.name
-    
-# Create your models here.
+           
+    def import_guests(file):
+        with open(file, newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for line in reader:
+                name = line['Nome']
+                phone = line['Telefone']
+                phone = re.sub(r'\D', '', phone)
+                parent = line['Pai']
+                parent = Guests.objects.filter(name=parent).first() if parent else None
+
+                if not Guests.objects.filter(name=name, phone=phone).exists():
+                    Guests.objects.create(name=name, phone=phone, parent=parent)
+
 class Confirm(models.Model):
     name = models.CharField("Nome", max_length=200)
     confirm = models.BooleanField("Confirma sua Presença?")
@@ -44,4 +57,4 @@ class Confirm(models.Model):
 class Confirmations(models.Model):
     def export(self, confirmations):
         print("Exportando confirmações...")
-        return Tru
+        return True
