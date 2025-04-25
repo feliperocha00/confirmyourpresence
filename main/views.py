@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from . import models 
+from openpyxl import Workbook
 
 # Create your views here.
 def home(request):
@@ -40,6 +41,33 @@ def confirm(request):
 # @user_passes_test(is_admin)
 def confirmations(request):
     confirmations = models.Confirm.objects.all()
+
+    if request.method == "POST":
+        # form = models.Confirmations(request.POST)
+        # form.export(confirmations)
+        # return render(request, "success.html")
+        
+        # Criar o workbook e a planilha
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Confirmações"
+
+        # Cabeçalhos
+        ws.append(["Nome", "Confirmação"])
+
+        # Linhas com dados
+        for c in confirmations:
+            status = "Confirmado" if c.confirm else "Não vai"
+            ws.append([c.name, status])
+
+        # Criar resposta
+        response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response['Content-Disposition'] = 'attachment; filename="confirmacoes.xlsx"'
+
+        # Salvar no response
+        wb.save(response)
+        return response
+
     return render(request, "confirmations.html", {"confirmations": confirmations})
 
 # @login_required
