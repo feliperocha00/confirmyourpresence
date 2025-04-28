@@ -16,8 +16,9 @@ def notfound(request):
 def welcome(request):
     if request.method == "POST":
         form = models.Welcome(request.POST)
-        if form.find_number(form.pk.get('Telefone')):
-            return render(request, "confirm.html")
+        guest, guest_childs = form.find_number(form.pk.get('Telefone'))
+        if guest:
+            return render(request, "confirm.html", {'guest': guest, 'childs': guest_childs})
         else:
             return redirect("notfound")
 
@@ -29,7 +30,6 @@ def confirm(request):
         if form.is_valid():
             form.save()
             return redirect("success")
-    
 
     return render(request, "confirm.html")    
 
@@ -73,12 +73,15 @@ def confirmations(request):
 # @login_required
 # @user_passes_test(is_admin)
 def guests(request):
-    guests = models.Guests.objects.all()
-    return render(request, "guests.html", {"guests": guests})
+    guest_list = models.Guests.objects.all()
+    print(guest_list)
+    return render(request, "guests.html", {"guests": guest_list})
     
 def add_guests(request):
     if request.method == "POST":
-        if models.Guests.import_guests(request.FILES.get('file').file):
+        IoBytes = request.FILES.get('file').file
+
+        if models.Guests.import_guests(IoBytes):
             return redirect("guests")
     
     return render(request, "add_guests.html")
