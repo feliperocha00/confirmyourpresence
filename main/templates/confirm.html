@@ -33,6 +33,56 @@
         h2 {
             color: #3b6d50;
         }
+        .custom-checkbox {
+        display: inline-block;
+        position: relative;
+        /* cursor: not-allowed; já que está desabilitado */
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+        opacity: 0;
+        position: absolute;
+        cursor: inherit;
+        height: 0;
+        width: 0;
+        }
+
+        .custom-checkbox span {
+        height: 20px;
+        width: 20px;
+        background-color: #f0f0f0;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        display: inline-block;
+        vertical-align: middle;
+        transition: background-color 0.2s, border-color 0.2s;
+        position: relative;
+        }
+
+        /* Estilo quando marcada */
+        .custom-checkbox input:checked + span {
+        background-color: #549463; /* verde */
+        border-color: #549463;
+        }
+
+        /* Check visível como pseudo-elemento */
+        .custom-checkbox span::after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        }
+
+        /* Mostrar o check quando marcado */
+        .custom-checkbox input:checked + span::after {
+        display: block;
+        }
     </style>
 {% endblock style %}
 {% block content %}
@@ -40,18 +90,43 @@
         <h2>Confirme sua Presença</h2>
         <form method="post" class="text-start">
             {% csrf_token %}
-            <div class="mb-3">
+                
+            <div class="d-flex justify-content-center align-items-center mb-3" style="gap: 10px;">
                 <label for="nome" class="form-label">Nome:</label>
-                <input type="text" id="nome" name="nome" class="form-control" required>
+                <input type="text" id="nome" name="nome" class="form-control" readonly value="{{ guest.name }}">
+                <label for="checkbox" class="form-label">Vai?</label>
+                <label name="checkbox" class="custom-checkbox">
+                    <input type="checkbox" {% if confirmation.confirm %}checked{% endif %}>
+                    <span></span>
+                </label>
             </div>
-            
+            {% if childs.count > 0  %}
             <div class="mb-3">
-                <label for="presenca" class="form-label">Confirma presença?</label>
-                <select id="presenca" name="presenca" class="form-select" required>
-                    <option value="sim">Sim</option>
-                    <option value="nao">Não</option>
-                </select>
+                <label for="dependents" class="form-label">Dependentes:</label>
+                <table class="table table-bordered table-striped" name="dependents">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Confirmação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for child in childs %}
+                        <tr>
+                            <td>{{ child.name }}</td>
+                            <td>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </label>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
+            {% endif %}
+            
 
             <button type="submit" class="btn btn-custom w-100">Enviar</button>
         </form>
