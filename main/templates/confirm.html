@@ -88,7 +88,7 @@
 {% block content %}
     <div class="container text-center">
         <h2>Confirme sua Presença</h2>
-        <form method="post" class="text-start">
+        <form method="post" class="text-start"  action="{% url 'confirm_presence' %}">
             {% csrf_token %}
                 
             <div class="d-flex justify-content-center align-items-center mb-3" style="gap: 10px;">
