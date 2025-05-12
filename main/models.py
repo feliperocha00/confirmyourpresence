@@ -10,9 +10,10 @@ class Welcome(models.Model):
         phone = re.sub(r'\D', '', phone)
         guest = Guests.objects.filter(phone=phone).first()
         if guest:
-            # guest_childs = Guests.objects.filter(parent=guest).values_list('name', flat=True)
             guest_childs = guest.childs.all()
-            return guest, guest_childs
+            guests = guest_childs
+            guests.append(guest) #TODO append it is not a QuerySet method
+            return guests
         else:
             return False
     

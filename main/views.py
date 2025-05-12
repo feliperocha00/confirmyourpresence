@@ -16,9 +16,9 @@ def notfound(request):
 def welcome(request):
     if request.method == "POST":
         form = models.Welcome(request.POST)
-        guest, guest_childs = form.find_number(form.pk.get('Telefone'))
-        if guest:
-            return render(request, "confirm.html", {'guest': guest, 'childs': guest_childs})
+        guests = form.find_number(form.pk.get('Telefone'))
+        if guests:
+            return render(request, "confirm.html", {'guests': guests})
         else:
             return redirect("notfound")
 

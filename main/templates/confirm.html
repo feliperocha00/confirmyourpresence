@@ -91,23 +91,25 @@
         <form method="post" class="text-start"  action="{% url 'confirm_presence' %}">
             {% csrf_token %}
                 
-            <div class="d-flex justify-content-center align-items-center mb-3" style="gap: 10px;">
+            <!-- <div class="mb-3" style="gap: 10px;">
                 <label for="nome" class="form-label">Nome:</label>
                 <input type="text" id="nome" name="nome" class="form-control" readonly value="{{ guest.name }}">
-                <label for="checkbox" class="form-label">Vai?</label>
-                <label name="checkbox" class="custom-checkbox">
+            </div>
+            <div class="mb-3">
+                <label for="checkbox" class="form-label">Confirma a presença?</label>
+                <label name="checkbox" class="custom-checkbox" style="padding-left: 10px;">
                     <input type="checkbox" {% if confirmation.confirm %}checked{% endif %}>
                     <span></span>
                 </label>
-            </div>
-            {% if childs.count > 0  %}
+            </div> -->
+            <!-- {% if childs.count > 0  %} -->
             <div class="mb-3">
                 <label for="dependents" class="form-label">Dependentes:</label>
                 <table class="table table-bordered table-striped" name="dependents">
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Confirmação</th>
+                            <th>Confirma a presença?</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,7 +127,7 @@
                     </tbody>
                 </table>
             </div>
-            {% endif %}
+            <!-- {% endif %} -->
             
 
             <button type="submit" class="btn btn-custom w-100">Enviar</button>
