@@ -90,22 +90,9 @@
         <h2>Confirme sua Presença</h2>
         <form method="post" class="text-start"  action="{% url 'confirm_presence' %}">
             {% csrf_token %}
-                
-            <!-- <div class="mb-3" style="gap: 10px;">
-                <label for="nome" class="form-label">Nome:</label>
-                <input type="text" id="nome" name="nome" class="form-control" readonly value="{{ guest.name }}">
-            </div>
             <div class="mb-3">
-                <label for="checkbox" class="form-label">Confirma a presença?</label>
-                <label name="checkbox" class="custom-checkbox" style="padding-left: 10px;">
-                    <input type="checkbox" {% if confirmation.confirm %}checked{% endif %}>
-                    <span></span>
-                </label>
-            </div> -->
-            <!-- {% if childs.count > 0  %} -->
-            <div class="mb-3">
-                <label for="dependents" class="form-label">Dependentes:</label>
-                <table class="table table-bordered table-striped" name="dependents">
+                <label for="guests" class="form-label">Convidados:</label>
+                <table class="table table-bordered table-striped" name="guests">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -113,9 +100,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for child in childs %}
-                        <tr>
-                            <td>{{ child.name }}</td>
+                        {% for guest in guests %}
+                        <!-- TODO: form-control breaks the view and did not show guests in submit function -->
+                        <tr class="form-control"> 
+                            <td>{{ guest.name }}</td>
                             <td>
                                 <label class="custom-checkbox">
                                     <input type="checkbox">
@@ -127,7 +115,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- {% endif %} -->
             
 
             <button type="submit" class="btn btn-custom w-100">Enviar</button>
