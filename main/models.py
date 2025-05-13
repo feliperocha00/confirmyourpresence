@@ -12,7 +12,8 @@ class Welcome(models.Model):
         if guest:
             guest_childs = guest.childs.all()
             guests = guest_childs
-            guests.append(guest) #TODO append it is not a QuerySet method
+            guests = list(guests)
+            guests.append(guest)
             return guests
         else:
             return False
