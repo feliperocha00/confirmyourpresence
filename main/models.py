@@ -31,6 +31,10 @@ class Guests(models.Model):
         on_delete=models.SET_NULL,
         related_name='childs'
     )
+    confirm = models.BooleanField(
+        "Confirma a presença?",
+        default=False
+    )
 
     def __str__(self):
         return self.name
@@ -57,15 +61,16 @@ class Guests(models.Model):
             if not Guests.objects.filter(name=name, phone=phone).exists():
                 Guests.objects.create(name=name, phone=phone, parent=parent)
 
+    def find_guest(self, name):
+        guest = self.objects.filter(name=name).first()
+        if guest:
+            return guest
+        else:
+            return False
+
 class Confirm(models.Model):
     name = models.CharField("Nome", max_length=200)
     confirm = models.BooleanField("Confirma sua Presença?")
-
-    def is_valid(self):
-        if self:
-            return True
-        else:
-            return False
 
     def __str__(self):
         return self.name
