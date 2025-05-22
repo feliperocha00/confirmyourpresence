@@ -102,11 +102,14 @@
                     <tbody>
                         {% for guest in guests %}
                         <!-- TODO: form-control breaks the view and did not show guests in submit function -->
-                        <tr class="form-control"> 
-                            <td>{{ guest.name }}</td>
+                        <tr> 
+                            <td>
+                                {{ guest.name }}
+                                <input type="hidden" name="guest_name_{{ forloop.counter }}" value="{{ guest.name }}">
+                            </td>
                             <td>
                                 <label class="custom-checkbox">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="guest_confirmation_{{ forloop.counter }}" value="{{ guest.confirm }}">
                                     <span></span>
                                 </label>
                             </td>
@@ -115,8 +118,7 @@
                     </tbody>
                 </table>
             </div>
-            
-
+            <input type="hidden" name="total_rows" value="{{ guests|length }}">
             <button type="submit" class="btn btn-custom w-100">Enviar</button>
         </form>
     </div>
