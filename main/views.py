@@ -24,22 +24,31 @@ def welcome(request):
 
     return render(request, "welcome.html")
 
+# def confirm(request):
+#     if request.method == 'POST':
+#         form = models.Guests(request.POST)
+#         form.save()
+#     return render(request, "confirm.html")    
+
 def confirm(request):
     if request.method == 'POST':
-        form = models.Guests(request.POST)
         total_rows = int(request.POST.get('total_rows', 0))
-        items = []
+
         for i in range(1, total_rows + 1):
-            name = request.POST.get(f'guest_name_{i}')
-            confirmation = request.POST.get(f'guest_confirmation_{i}')
+            guest_name = request.POST.get(f'guest_name_{i}')
+            guest_confirmation = request.POST.get(f'guest_confirmation_{i}')
+            
+            if guest_name:
+                is_confirmed = guest_confirmation is not None
 
-            guest = form.find_guest(name)
-            if guest:
-                form.save()
-                # items.append({'name': name, 'quantity': confirmation})
-        
-        return render(request, 'success.html', {'items': items})
-
+                try:
+                    guest = models.Guests.objects.get(name=guest_name)
+                    guest.confirm = is_confirmed
+                    guest.save()
+                except models.Guests.DoesNotExist:
+                    raise UserWarning("Convidado não encontrado. Comunique o Noivo!")
+                
+        return redirect('success')
     return render(request, "confirm.html")    
 
 # Verificação: é superusuário?
