@@ -97,15 +97,27 @@
                     <th>Nome</th>
                     <th>Confirmação</th>
                 </tr>
-            </thead>
+            </thead> 
             <tbody>
-                {% for confirmation in confirmations %}
+                {% if guests.count == 0 %}
                 <tr>
-                    <td>{{ confirmation.name }}</td>
+                    <td colspan="3" class="text-center">Nenhuma confirmação.</td>
+                </tr>
+                {% endif %}
+                {% for guest in guests %}
+                <tr>
                     <td>
-                        <!-- <input type="checkbox" {% if confirmation.confirm %}checked{% endif %} disabled> -->
+                        {{ guest.name }}
+                    </td>
+                    <td>
                         <label class="custom-checkbox">
-                            <input type="checkbox" {% if confirmation.confirm %}checked{% endif %} disabled>
+                            <!-- TODO: checkbox not changing -->
+                            {{ guest.confirm }}
+                            {% if guests.confirm == true %}
+                            <input type="checkbox" checked="true">
+                            {% else %}
+                            <input type="checkbox" >
+                            {% endif %}
                             <span></span>
                         </label>
                     </td>
