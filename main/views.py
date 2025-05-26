@@ -24,12 +24,6 @@ def welcome(request):
 
     return render(request, "welcome.html")
 
-# def confirm(request):
-#     if request.method == 'POST':
-#         form = models.Guests(request.POST)
-#         form.save()
-#     return render(request, "confirm.html")    
-
 def confirm(request):
     if request.method == 'POST':
         total_rows = int(request.POST.get('total_rows', 0))
@@ -58,13 +52,9 @@ def confirm(request):
 # @login_required
 # @user_passes_test(is_admin)
 def confirmations(request):
-    confirmations = models.Confirm.objects.all()
+    guests = models.Guests.objects.all()
 
-    if request.method == "POST":
-        # form = models.Confirmations(request.POST)
-        # form.export(confirmations)
-        # return render(request, "success.html")
-        
+    if request.method == "POST":        
         # Criar o workbook e a planilha
         wb = Workbook()
         ws = wb.active
@@ -74,9 +64,9 @@ def confirmations(request):
         ws.append(["Nome", "Confirmação"])
 
         # Linhas com dados
-        for c in confirmations:
-            status = "Confirmado" if c.confirm else "Não vai"
-            ws.append([c.name, status])
+        for g in guests:
+            confirm = "Confirmado" if g.confirm else "Não vai"
+            ws.append([g.name, confirm])
 
         # Criar resposta
         response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
@@ -86,7 +76,7 @@ def confirmations(request):
         wb.save(response)
         return response
 
-    return render(request, "confirmations.html", {"confirmations": confirmations})
+    return render(request, "confirmations.html", {"guests": guests})
 
 # @login_required
 # @user_passes_test(is_admin)
