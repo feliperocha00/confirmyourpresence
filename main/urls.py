@@ -9,7 +9,5 @@ urlpatterns = [
     path("confirm/success/", views.success, name="success"),
     path("confirmations/", views.confirmations, name="confirmations"),
     path("guests/", views.guests, name="guests"),
-    path("guests/add", views.add_guests, name="add_guests"),
-    # path('login/', auth_views.LoginView.as_view(), name='login'),
-    # path('logout/', auth_views.LogoutView.as_view(), name='logout')
+    path("guests/add", views.add_guests, name="add_guests")
 ]
