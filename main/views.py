@@ -49,8 +49,7 @@ def confirm(request):
 # def is_admin(user):
     # return user.is_superuser
 
-# @login_required
-# @user_passes_test(is_admin)
+@login_required
 def confirmations(request):
     guests = models.Guests.objects.all()
 
@@ -78,8 +77,7 @@ def confirmations(request):
 
     return render(request, "confirmations.html", {"guests": guests})
 
-# @login_required
-# @user_passes_test(is_admin)
+@login_required
 def guests(request):
     guest_list = models.Guests.objects.all()
     return render(request, "guests.html", {"guests": guest_list})
