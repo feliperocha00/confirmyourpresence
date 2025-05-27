@@ -100,6 +100,7 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Nome</th>
                     <th>Confirmação</th>
                 </tr>
@@ -112,6 +113,9 @@
                 {% endif %}
                 {% for guest in guests %}
                 <tr>
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
                     <td>
                         {{ guest.name }}
                     </td>
