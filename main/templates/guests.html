@@ -50,9 +50,11 @@
     <table class="table  table-bordered table-striped">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Pai</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +66,9 @@
             {% for guest in guests %}
             <tr>
                 <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
                     {{ guest.name }}
                 </td>
                 <td>
@@ -74,7 +79,10 @@
                     {{ guest.parent }}
                     {% endif %}
                 </td>
-
+                <td>
+                    <!-- TODO: delete button logic -->
+                    <i class="bi bi-trash"></i>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
