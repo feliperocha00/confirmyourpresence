@@ -97,7 +97,7 @@
                     <th>Nome</th>
                     <th>Confirmação</th>
                 </tr>
-            </thead> 
+            </thead>
             <tbody>
                 {% if guests.count == 0 %}
                 <tr>
@@ -111,13 +111,7 @@
                     </td>
                     <td>
                         <label class="custom-checkbox">
-                            <!-- TODO: checkbox not changing -->
-                            {{ guest.confirm }}
-                            {% if guests.confirm == true %}
-                            <input type="checkbox" checked="true">
-                            {% else %}
-                            <input type="checkbox" >
-                            {% endif %}
+                            <input type="checkbox" {% if guest.confirm %}checked{% endif %} disabled>
                             <span></span>
                         </label>
                     </td>
