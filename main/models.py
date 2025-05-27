@@ -40,7 +40,6 @@ class Guests(models.Model):
         return self.name
            
     def import_guests(IoBytes):
-        # csv_data = base64.b64decode(IoBytes)
         data_file = io.StringIO(IoBytes.getvalue().decode('utf-8'))
         data_file.seek(0)
         file_reader = []

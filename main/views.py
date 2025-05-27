@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from . import models
 from openpyxl import Workbook
 
-# Create your views here.
 def home(request):
     return render(request, "home.html")
 
@@ -44,10 +43,6 @@ def confirm(request):
                 
         return redirect('success')
     return render(request, "confirm.html")    
-
-# Verificação: é superusuário?
-# def is_admin(user):
-    # return user.is_superuser
 
 @login_required
 def confirmations(request):
