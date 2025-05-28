@@ -71,3 +71,14 @@ class Confirmations(models.Model):
     def export(self, confirmations):
         print("Exportando confirmações...")
         return True
+
+class Gift(models.Model):
+    name = models.CharField("Produto", max_length=200)
+    price = models.FloatField("Preço")
+    image = models.BinaryField()
+
+    def buy(self):
+        return True
+    
+# class Cart(models.Model):
+    # product_ids = models.ManyToManyRel() TODO relation with products
