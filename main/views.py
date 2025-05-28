@@ -12,6 +12,9 @@ def success(request):
 def notfound(request):
     return render(request, "not_found.html")
 
+def already_confirmed(request):
+    return render(request, "already_confirmed.html")
+
 def welcome(request):
     if request.method == "POST":
         form = models.Welcome(request.POST)
@@ -85,3 +88,6 @@ def add_guests(request):
             return redirect("guests")
     
     return render(request, "add_guests.html")
+
+def gift_list(request):
+    return render(request, "gift_list.html")
