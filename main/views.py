@@ -13,6 +13,17 @@ def notfound(request):
     return render(request, "not_found.html")
 
 def already_confirmed(request):
+    if request.method == "POST":
+        form = models.Welcome(request.POST)
+        guests = form.find_number(form.pk.get('Telefone'))
+        if guests:
+            if any([g.confirm for g in guests]):
+                return render(request, "confirm.html", {'guests': guests})
+            else:
+                return render(request, "already_confirmed.html", {'guests': guests})
+        else:
+            return redirect("notfound")
+        
     return render(request, "already_confirmed.html")
 
 def welcome(request):
@@ -20,7 +31,10 @@ def welcome(request):
         form = models.Welcome(request.POST)
         guests = form.find_number(form.pk.get('Telefone'))
         if guests:
-            return render(request, "confirm.html", {'guests': guests})
+            if any([g.confirm for g in guests]):
+                return render(request, "confirm.html", {'guests': guests})
+            else:
+                return render(request, "already_confirmed.html", {'guests': guests})
         else:
             return redirect("notfound")
 
