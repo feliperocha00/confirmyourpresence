@@ -104,4 +104,13 @@ def add_guests(request):
     return render(request, "add_guests.html")
 
 def gift_list(request):
-    return render(request, "gift_list.html")
+    return render(request, "gift_list.html")def gift(request, gift_id):
+    # gift = get_object_or_404(Gift, pk=gift_id)
+
+    # if request.method == "POST":
+    #     gift.taken = True
+    #     gift.save()
+    #     return redirect("gift_thanks")  # ou alguma tela de agradecimento
+
+    return render(request, "gift.html", {"gift_id": gift_id})
+    # return render(request, "gift.html")

@@ -11,5 +11,6 @@ urlpatterns = [
     path("confirmations/", views.confirmations, name="confirmations"),
     path("guests/", views.guests, name="guests"),
     path("guests/add", views.add_guests, name="add_guests"),
-    path("gift_list/", views.gift_list, name="gift_list")
+    path("gift_list/", views.gift_list, name="gift_list"),
+    path("gift/<int:gift_id>/give/", views.gift, name="gift")
 ]
