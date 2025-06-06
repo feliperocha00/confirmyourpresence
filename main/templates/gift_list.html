@@ -63,7 +63,7 @@
         {% for gift in gifts %}
         <div class="col">
             <div class="gift-card h-100 d-flex flex-column">
-                <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img">
+                <img src="{{ gift.image }}" alt="{{ gift.name }}" class="gift-img">
                 <h5>{{ gift.name }}</h5>
                 {% if gift.price %}
                 <p class="text-muted">Valor sugerido: R$ {{ gift.price }}</p>
