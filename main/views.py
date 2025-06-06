@@ -104,22 +104,23 @@ def add_guests(request):
     return render(request, "add_guests.html")
 
 def gift_list(request):
-    # gifts = models.Gift.objects.all()
+    gifts = models.Gift.objects.all()
     # exemplo
-    gifts = [
-        {"id": 1, "name": "Liquidificador", "price": 250.00, "image_url": "/media/liquidificador.png"},
-        {"id": 2, "name": "Aparelho de jantar", "price": 320.00, "image_url": "/media/jantar.jpg"},
-    ]
+    # gifts = [
+    #     {"id": 1, "name": "Liquidificador", "price": 250.00, "image_url": "/media/liquidificador.png"},
+    #     {"id": 2, "name": "Aparelho de jantar", "price": 320.00, "image_url": "/media/jantar.jpg"},
+    # ]
 
     return render(request, "gift_list.html", {"gifts": gifts})
 
 def gift(request, gift_id):
-    # gift = get_object_or_404(Gift, pk=gift_id)
-
-    # if request.method == "POST":
-    #     gift.taken = True
-    #     gift.save()
-    #     return redirect("gift_thanks")  # ou alguma tela de agradecimento
+    form = models.Gift(request.POST)
+    if request.method == "POST":
+        gift = form.find_gift(gift_id)
+        if gift:
+            # gift.taken = True
+            gift.save()
+            return redirect("gift_thanks")  # ou alguma tela de agradecimento
 
     return render(request, "gift.html", {"gift_id": gift_id})
     # return render(request, "gift.html")
