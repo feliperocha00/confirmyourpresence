@@ -75,7 +75,11 @@ class Confirmations(models.Model):
 class Gift(models.Model):
     name = models.CharField("Produto", max_length=200)
     price = models.FloatField("Preço")
-    image = models.BinaryField()
+    image = models.BinaryField(null=True)
+    
+    def find_gift(self, gift_id):
+        gift = Gift.objects.filter(id=gift_id).first()
+        return gift
 
     def buy(self):
         return True
