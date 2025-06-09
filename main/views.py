@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from . import models
+from . import forms
 from openpyxl import Workbook
 
 def home(request):
@@ -124,3 +125,14 @@ def gift(request, gift_id):
 
     return render(request, "gift.html", {"gift_id": gift_id})
     # return render(request, "gift.html")
+
+def add_gift(request):
+    if request.method == "POST":
+        form = forms.GiftForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("gift_list")  # redirecione para a lista de presentes
+    else:
+        form = forms.GiftForm()
+    
+    return render(request, "add_gift.html", {"form": form})

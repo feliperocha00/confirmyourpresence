@@ -53,10 +53,37 @@
     .btn-custom:hover {
         background-color: #8b4f3a;
     }
+    
+    .icon-links {
+        position: absolute;
+        bottom: 20px;
+        right: 30px;
+        display: flex;
+        gap: 15px;
+        z-index: 1000;
+    }
+
+    .icon-links a {
+        color: #a0522d;
+        /* tom terroso para combinar com o tema */
+        font-size: 28px;
+        transition: color 0.3s ease;
+    }
+
+    .icon-links a:hover {
+        color: #6c3c1c;
+        /* tom mais escuro ao passar o mouse */
+    }
 </style>
 {% endblock style %}
 
 {% block content %}
+<div class="icon-links">
+    <a href="{% url 'add_gift' %}" title="Adicionar Presentes">
+    {% comment %} <a href="#" title="Adicionar Presentes"> {% endcomment %}
+        <i class="fa-solid fa-circle-plus"></i>
+    </a>
+</div>
 <div class="container">
     <h2 class="text-center mb-4" style="color: #3b6d50;">Lista de Presentes</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
