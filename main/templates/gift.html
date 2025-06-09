@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Confirmar Presente{% endblock %}
+{% block title %}Cadastrar Presente{% endblock %}
 
 {% block style %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,14 +23,6 @@
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .gift-img {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 15px;
-    }
-
     .btn-custom {
         background-color: #a65f46;
         color: white;
@@ -41,15 +33,15 @@
         background-color: #8b4f3a;
     }
 
-    .btn-secondary {
-        background-color: #ccc;
-        border: none;
-        color: #333;
-    }
-
     h2 {
         color: #3b6d50;
     }
+
+    label {
+        font-weight: bold;
+        margin-top: 15px;
+    }
+    
     .icon-links {
         position: absolute;
         top: 20px;
@@ -74,38 +66,39 @@
 {% endblock style %}
 
 {% block content %}
-<div class="container text-center">
-    <h2>Você escolheu presentear:</h2>
-    <h4>{{ gift_id }}</h4>
-    {%comment%}
-    <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img">
-    <h4>{{ gift.name }}</h4>
-    {% if gift.price %}
-        <p class="text-muted">Valor sugerido: R$ {{ gift.price }}</p>
-    {% endif %}
+<div class="container">
     <div class="icon-links">
         {% comment %} <a href="{% url 'edit_gift' gift.id %}" title="Adicionar Presentes"> {% endcomment %}
         <a href="#" title="Adicionar Presentes">
             <i class="fa-solid fa-circle-plus"></i>
         </a>
     </div>
+    <h2 class="text-center mb-4">{{ gift.name }}</h2>
 
-    <p class="mt-4">Deseja confirmar que irá nos presentear com este item?</p>
-    <form method="post" action="{% url 'gift' gift.id %}">
+    <div class="text-center mb-4">
+        <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img img-fluid rounded shadow-sm">
+    </div>
+
+    <form method="post">
         {% csrf_token %}
-        <div class="d-grid gap-2">
+        
+    
+        <div class="mb-3">
+            <label for="id_price" class="form-label">Preço:</label>
+            {{ gift.price }}
+        </div>
+
+        
         <div class="mb-3" invisible>
             <label for="id_product_url" class="form-label">URL do produto:</label>
             {{ gift.product_url }}
         </div>
+
+        <div class="d-grid">
             <button type="submit" class="btn btn-custom">
-                <i class="fas fa-check-circle me-1"></i> Confirmar presente
+                <i class="fas fa-save me-1"></i> Salvar presente
             </button>
-            <a href="{% url 'gift_list' %}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left me-1"></i> Voltar à lista
-            </a>
         </div>
     </form>
-    {%endcomment%}
 </div>
 {% endblock content %}
