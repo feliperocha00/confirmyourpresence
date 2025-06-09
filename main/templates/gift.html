@@ -94,6 +94,10 @@
     <form method="post" action="{% url 'gift' gift.id %}">
         {% csrf_token %}
         <div class="d-grid gap-2">
+        <div class="mb-3" invisible>
+            <label for="id_product_url" class="form-label">URL do produto:</label>
+            {{ gift.product_url }}
+        </div>
             <button type="submit" class="btn btn-custom">
                 <i class="fas fa-check-circle me-1"></i> Confirmar presente
             </button>
