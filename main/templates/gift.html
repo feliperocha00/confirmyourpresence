@@ -50,6 +50,26 @@
     h2 {
         color: #3b6d50;
     }
+    .icon-links {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        display: flex;
+        gap: 15px;
+        z-index: 1000;
+    }
+
+    .icon-links a {
+        color: #a0522d;
+        /* tom terroso para combinar com o tema */
+        font-size: 28px;
+        transition: color 0.3s ease;
+    }
+
+    .icon-links a:hover {
+        color: #6c3c1c;
+        /* tom mais escuro ao passar o mouse */
+    }
 </style>
 {% endblock style %}
 
@@ -63,6 +83,12 @@
     {% if gift.price %}
         <p class="text-muted">Valor sugerido: R$ {{ gift.price }}</p>
     {% endif %}
+    <div class="icon-links">
+        {% comment %} <a href="{% url 'edit_gift' gift.id %}" title="Adicionar Presentes"> {% endcomment %}
+        <a href="#" title="Adicionar Presentes">
+            <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </div>
 
     <p class="mt-4">Deseja confirmar que irá nos presentear com este item?</p>
     <form method="post" action="{% url 'gift' gift.id %}">

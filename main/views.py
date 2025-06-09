@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 from openpyxl import Workbook
@@ -115,16 +115,24 @@ def gift_list(request):
     return render(request, "gift_list.html", {"gifts": gifts})
 
 def gift(request, gift_id):
-    form = models.Gift(request.POST)
+    gift = get_object_or_404(models.Gift, pk=gift_id)
+    
     if request.method == "POST":
-        gift = form.find_gift(gift_id)
-        if gift:
-            # gift.taken = True
-            gift.save()
-            return redirect("gift_thanks")  # ou alguma tela de agradecimento
+        gift.taken = True
+        return redirect("success")  # ou alguma tela de agradecimento
 
-    return render(request, "gift.html", {"gift_id": gift_id})
-    # return render(request, "gift.html")
+    return render(request, "gift.html", {"gift": gift})
+
+def edit_gift(request, gift_id):
+    gift = get_object_or_404(models.Gift, pk=gift_id)
+    
+    if request.method == "POST":
+        form = forms.Gift(request.POST, instance=gift)
+        if form.is_valid():
+            gift.save()
+            return redirect("gift")  # ou alguma tela de agradecimento
+
+    return render(request, "edit_gift.html", {"gift_id": gift_id})
 
 def add_gift(request):
     if request.method == "POST":
@@ -132,6 +140,9 @@ def add_gift(request):
         if form.is_valid():
             form.save()
             return redirect("gift_list")  # redirecione para a lista de presentes
+        else:
+            #TODO notificação de erro js na tela
+            print(form.errors)
     else:
         form = forms.GiftForm()
     

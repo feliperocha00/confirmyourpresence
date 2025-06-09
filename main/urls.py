@@ -13,5 +13,6 @@ urlpatterns = [
     path("guests/add", views.add_guests, name="add_guests"),
     path("gift_list/", views.gift_list, name="gift_list"),
     path("gift_list/add/", views.add_gift, name="add_gift"),
-    path("gift/<int:gift_id>/give/", views.gift, name="gift")
+    path("gift/<int:gift_id>/give/", views.gift, name="gift"),
+    path("gift/edit/", views.edit_gift, name="edit_gift"),
 ]
