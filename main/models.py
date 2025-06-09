@@ -73,9 +73,11 @@ class Confirmations(models.Model):
         return True
 
 class Gift(models.Model):
-    name = models.CharField("Produto", max_length=200)
-    price = models.FloatField("Preço")
-    image = models.BinaryField(null=True)
+    name = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    image_url = models.URLField(max_length=500, null=True)
+    product_url = models.URLField(max_length=500, null=True)
+    taken = models.BooleanField(default=False)
     
     def find_gift(self, gift_id):
         gift = Gift.objects.filter(id=gift_id).first()
@@ -83,6 +85,3 @@ class Gift(models.Model):
 
     def buy(self):
         return True
-    
-# class Cart(models.Model):
-    # product_ids = models.ManyToManyRel() TODO relation with products
