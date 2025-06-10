@@ -55,12 +55,12 @@
             {{ form.name }}
         </div>
         
-        <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img">
+        <img src="{{ form.image_url }}"/>
     
-        <div class="mb-3">
+        {% comment %} <div class="mb-3">
             <label for="id_image_url" class="form-label">URL da imagem:</label>
             {{ form.image_url }}
-        </div>
+        </div> {% endcomment %}
 
         <div class="mb-3">
             <label for="id_price" class="form-label">Preço sugerido:</label>
