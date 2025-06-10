@@ -42,14 +42,14 @@
         margin-top: 15px;
     }
     
-    .icon-links {
-        position: absolute;
+    {% comment %} .icon-links {
+        position: inside;
         top: 20px;
         right: 30px;
         display: flex;
         gap: 15px;
         z-index: 1000;
-    }
+    } {% endcomment %}
 
     .icon-links a {
         color: #a0522d;
@@ -67,14 +67,19 @@
 
 {% block content %}
 <div class="container">
-    <div class="icon-links">
-        {% comment %} <a href="{% url 'edit_gift' gift.id %}" title="Adicionar Presentes"> {% endcomment %}
-        <a href="#" title="Adicionar Presentes">
-            <i class="fa-solid fa-circle-plus"></i>
-        </a>
-    </div>
-    <h2 class="text-center mb-4">{{ gift.name }}</h2>
 
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div></div> <!-- Espaço à esquerda -->
+        <h2 class="text-center flex-grow-1 mb-0">{{ gift.name }}</h2>
+        <div class="icon-links">
+            <a href="{% url 'edit_gift' gift.id %}" title="Adicionar Presentes">
+            {% comment %} <a href="#"> {% endcomment %}
+                <i class="icon-links fa-solid fa-cog"></i>
+            </a>
+        </div>
+    </div>
+
+    
     <div class="text-center mb-4">
         <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img img-fluid rounded shadow-sm">
     </div>
