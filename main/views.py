@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from . import models
 from . import forms
 from openpyxl import Workbook
@@ -122,14 +123,21 @@ def edit_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
     
     if request.method == "POST":
-        form = forms.GiftForm(request.POST, instance=gift)
-        if form.is_valid():
-            gift.save()
-            return redirect("gift")  # ou alguma tela de agradecimento
+        action = request.POST.get('action')
+        
+        if action == 'delete':
+            gift.delete()
+            messages.success(request, "Presente Excluído")
+            return redirect("gift_list")  # ou alguma tela de agradecimento
+        elif action == 'save':
+            form = forms.GiftForm(request.POST, instance=gift)
+            if form.is_valid():
+                gift.save()
+                return redirect("gift")  # ou alguma tela de agradecimento
     else:
         form = forms.GiftForm(instance=gift)
 
-    return render(request, "edit_gift.html", {"form": form})
+    return render(request, "edit_gift.html", {"form": form, "gift": gift})
 
 def add_gift(request):
     if request.method == "POST":
