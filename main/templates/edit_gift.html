@@ -47,20 +47,23 @@
 {% block content %}
 <div class="container">
     <h2 class="text-center mb-4"></h2>
-
+    
     <form method="post">
         {% csrf_token %}
+        
+        <div class="text-center mb-4">
+            <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img img-fluid rounded shadow-sm">
+        </div>
+        
+        <div class="mb-3"> 
+            <label for="id_image_url" class="form-label">URL da imagem:</label>
+            {{ form.image_url }}
+        </div> 
+        
         <div class="mb-3">
             <label for="id_name" class="form-label">Nome do produto:</label>
             {{ form.name }}
         </div>
-        
-        <img src="{{ form.image_url }}"/>
-    
-        {% comment %} <div class="mb-3">
-            <label for="id_image_url" class="form-label">URL da imagem:</label>
-            {{ form.image_url }}
-        </div> {% endcomment %}
 
         <div class="mb-3">
             <label for="id_price" class="form-label">Preço sugerido:</label>
@@ -73,8 +76,11 @@
             {{ form.product_url }}
         </div>
 
-        <div class="d-grid">
-            <button type="submit" class="btn btn-custom">
+        <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+            <button type="submit" action="delete" value="delete" class="btn btn-custom" onclick="return confirm('Tem certeza que deseja excluir este presente?')">
+                <i class="fas fa-trash me-1"></i> Excluir presente
+            </button>
+            <button type="submit" action="save" class="btn btn-custom" >
                 <i class="fas fa-save me-1"></i> Salvar presente
             </button>
         </div>
