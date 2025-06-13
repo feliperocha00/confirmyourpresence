@@ -30,6 +30,7 @@
         background-color: #fafafa;
         transition: transform 0.2s;
         height: 100%;
+        color: inherit;
     }
 
     .gift-card:hover {
@@ -86,17 +87,18 @@
 </div>
 <div class="container">
     <h2 class="text-center mb-4" style="color: #3b6d50;">Lista de Presentes</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 g-4">
         {% for gift in gifts %}
         <div class="col">
-            <a href="{% url 'gift' gift.id %}" title="Lista de Convidados">
+            <a href="{% url 'gift' gift.id %}" title="Lista de Convidados" style="text-decoration: none; color: inherit;">
             <div class="gift-card h-100 d-flex flex-column">
                 <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img">
+
                 <h5>{{ gift.name }}</h5>
+                
                 {% if gift.price %}
                 <p class="text-muted">Valor sugerido: R$ {{ gift.price }}</p>
                 {% endif %}
-
                 
                 {% if gift.taken %}
                 <button class="btn btn-secondary mt-2" disabled>Já presenteado</button>
