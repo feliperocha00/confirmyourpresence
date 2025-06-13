@@ -41,12 +41,31 @@
         font-weight: bold;
         margin-top: 15px;
     }
+    
+    .icon-links a {
+        color: #a0522d;
+        /* tom terroso para combinar com o tema */
+        font-size: 28px;
+        transition: color 0.3s ease;
+    }
+
+    .icon-links a:hover {
+        color: #6c3c1c;
+        /* tom mais escuro ao passar o mouse */
+    }
 </style>
 {% endblock style %}
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center mb-4"></h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="icon-links">
+            <a href="{% url 'gift' gift.id %}" title="Adicionar Presentes">
+                <i class="icon-links fa-solid fa-chevron-left"></i>
+            </a>
+        </div>
+        <h2 class="text-center flex-grow-1 mb-0">Editar Presente</h2>
+    </div>
     
     <form method="post">
         {% csrf_token %}
@@ -77,7 +96,9 @@
         </div>
 
         <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-            <button type="submit" action="delete" value="delete" class="btn btn-custom" onclick="return confirm('Tem certeza que deseja excluir este presente?')">
+            <button type="submit" class="btn btn-custom"
+             onclick="return confirm('Tem certeza que deseja excluir este presente?')"
+             formaction="{% url 'delete_gift' gift.id %}">
                 <i class="fas fa-trash me-1"></i> Excluir presente
             </button>
             <button type="submit" action="save" class="btn btn-custom" >
