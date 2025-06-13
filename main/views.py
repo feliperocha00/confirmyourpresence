@@ -123,28 +123,29 @@ def edit_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
     
     if request.method == "POST":
-        action = request.POST.get('action')
-        
-        if action == 'delete':
-            gift.delete()
-            messages.success(request, "Presente Excluído")
-            return redirect("gift_list")  # ou alguma tela de agradecimento
-        elif action == 'save':
-            form = forms.GiftForm(request.POST, instance=gift)
-            if form.is_valid():
-                gift.save()
-                return redirect("gift")  # ou alguma tela de agradecimento
+        form = forms.GiftForm(request.POST, instance=gift)
+        if form.is_valid():
+            gift.save()
+            return redirect("gift") 
     else:
         form = forms.GiftForm(instance=gift)
 
     return render(request, "edit_gift.html", {"form": form, "gift": gift})
+
+def delete_gift(request, gift_id):
+    gift = get_object_or_404(models.Gift, pk=gift_id)
+    
+    if request.method == "POST":
+        gift.delete()
+        messages.success(request, "Presente Excluído")
+        return redirect("gift_list")
 
 def add_gift(request):
     if request.method == "POST":
         form = forms.GiftForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("gift_list")  # redirecione para a lista de presentes
+            return redirect("gift_list")
         else:
             #TODO notificação de erro js na tela
             print(form.errors)
