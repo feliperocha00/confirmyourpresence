@@ -15,4 +15,5 @@ urlpatterns = [
     path("gift_list/add/", views.add_gift, name="add_gift"),
     path("gift/<int:gift_id>/give/", views.gift, name="gift"),
     path("gift/<int:gift_id>/edit/", views.edit_gift, name="edit_gift"),
+    path("gift/<int:gift_id>/delete/", views.delete_gift, name="delete_gift"),
 ]
