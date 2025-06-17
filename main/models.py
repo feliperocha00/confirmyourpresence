@@ -83,5 +83,26 @@ class Gift(models.Model):
         gift = Gift.objects.filter(id=gift_id).first()
         return gift
 
-    def buy(self):
-        return True
+    # def buy(self):
+    #     return True
+        
+    def import_gifts(IoBytes):
+        data_file = io.StringIO(IoBytes.getvalue().decode('utf-8'))
+        data_file.seek(0)
+        file_reader = []
+        csv_reader = csv.reader(data_file, delimiter=',')
+        file_reader.extend(csv_reader)
+
+        for index, line in enumerate(file_reader):
+            if index == 0:
+                # Ignora o cabeçalho
+                continue
+
+            name = line[0]
+            price = line[1]
+            price = float(price.lstrip('R$ ').replace(",", "."))
+            image_url = line[2]
+            product_url = line[3]
+
+            if not Gift.objects.filter(name=name).exists():
+                Gift.objects.create(name=name, price=price, image_url=image_url, product_url=product_url)

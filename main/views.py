@@ -153,3 +153,12 @@ def add_gift(request):
         form = forms.GiftForm()
     
     return render(request, "add_gift.html", {"form": form})
+
+def import_gifts(request):
+    if request.method == "POST":
+        IoBytes = request.FILES.get('file').file
+
+        if models.Gift.import_gifts(IoBytes):
+            return redirect("gift_list")
+    
+    return render(request, "import_gifts.html")
