@@ -17,6 +17,19 @@ class Welcome(models.Model):
             return guests
         else:
             return False
+
+class ListVerify(models.Model):
+    def find_number(self, phone):
+        phone = re.sub(r'\D', '', phone)
+        guest = Guests.objects.filter(phone=phone).first()
+        if guest:
+            guest_childs = guest.childs.all()
+            guests = guest_childs
+            guests = list(guests)
+            guests.append(guest)
+            return guests
+        else:
+            return False
     
 class Guests(models.Model):
     name = models.CharField("Nome", max_length=12)

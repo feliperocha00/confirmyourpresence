@@ -4,8 +4,10 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("", views.welcome, name="welcome"),
+    path("admin/", views.admin, name="admin"),
     path("not-found/", views.notfound, name="notfound"),
     path("already-confirmed/", views.already_confirmed, name="already_confirmed"),
+    path("list-verify/", views.list_verify, name="list_verify"),
     path("confirm/", views.confirm, name="confirm_presence"),
     path("confirm/success/", views.success, name="success"),
     path("confirmations/", views.confirmations, name="confirmations"),

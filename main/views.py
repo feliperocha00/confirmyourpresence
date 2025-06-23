@@ -5,8 +5,9 @@ from . import models
 from . import forms
 from openpyxl import Workbook
 
-def home(request):
-    return render(request, "home.html")
+@login_required
+def admin(request):
+    return render(request, "admin_page.html")
 
 def success(request):
     return render(request, "success.html")
@@ -29,9 +30,12 @@ def already_confirmed(request):
     return render(request, "already_confirmed.html")
 
 def welcome(request):
+    return render(request, "welcome.html")
+
+def list_verify(request):
     if request.method == "POST":
-        form = models.Welcome(request.POST)
-        guests = form.find_number(form.pk.get('Telefone'))
+        model = models.ListVerify(request.POST)
+        guests = model.find_number(model.pk.get('Telefone'))
         if guests:
             if any([g.confirm for g in guests]):
                 return render(request, "confirm.html", {'guests': guests})
@@ -40,7 +44,7 @@ def welcome(request):
         else:
             return redirect("notfound")
 
-    return render(request, "welcome.html")
+    return render(request, "list_verify.html")
 
 def confirm(request):
     if request.method == 'POST':
