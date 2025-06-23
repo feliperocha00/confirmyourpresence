@@ -58,8 +58,8 @@
     
     .icon-links {
         position: absolute;
-        bottom: 20px;
-        right: 30px;
+        top: 20px;
+        left: 30px;
         display: flex;
         gap: 15px;
         z-index: 1000;
@@ -81,6 +81,9 @@
 
 {% block content %}
 <div class="icon-links">
+    <a href="{% url 'welcome' %}" title="Lista de Convidados">
+        <i class="fa-solid fa-chevron-left"></i>
+    </a>
     <a href="{% url 'add_gift' %}" title="Adicionar Presente">
         <i class="fa-solid fa-circle-plus"></i>
     </a>
