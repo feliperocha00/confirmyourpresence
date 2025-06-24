@@ -100,14 +100,14 @@ def guests(request):
     guest_list = models.Guests.objects.all()
     return render(request, "guests.html", {"guests": guest_list})
     
-def add_guests(request):
+def import_guests(request):
     if request.method == "POST":
         IoBytes = request.FILES.get('file').file
 
         if models.Guests.import_guests(IoBytes):
             return redirect("guests")
     
-    return render(request, "add_guests.html")
+    return render(request, "import_guests.html")
 
 def gift_list(request):
     gifts = models.Gift.objects.all()
