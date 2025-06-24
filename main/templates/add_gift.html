@@ -41,12 +41,31 @@
         font-weight: bold;
         margin-top: 15px;
     }
+    
+    .icon-links a {
+        color: #a0522d;
+        /* tom terroso para combinar com o tema */
+        font-size: 28px;
+        transition: color 0.3s ease;
+    }
+
+    .icon-links a:hover {
+        color: #6c3c1c;
+        /* tom mais escuro ao passar o mouse */
+    }
 </style>
 {% endblock style %}
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center mb-4">Cadastrar Novo Presente</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="icon-links">
+            <a href="javascript:history.back()" title="Voltar">
+                <i class="icon-links fa-solid fa-chevron-left"></i>
+            </a>
+        </div>
+        <h2 class="text-center flex-grow-1 mb-0">Cadastrar Novo Presente</h2>
+    </div>
 
     <form method="post">
         {% csrf_token %}
