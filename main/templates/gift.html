@@ -106,8 +106,8 @@
                 <img src="{% static 'img/icons8-foto-50.png' %}" alt="Ícone" style="width: 20px; height: 20px; margin-right: 8px;">
                 Presentear o valor
             </button>
-            <button type="submit" action="save" class="btn btn-custom" >
-                <i class="fas fa-gift me-1"></i> Adquirir o presente na loja
+            <button type="button" class="btn btn-custom" onclick="window.open('{{ gift.product_url }}', '_blank')">
+                <i class="fas fa-link me-1"></i> Ver produto
             </button>
         </div>
     </form>
