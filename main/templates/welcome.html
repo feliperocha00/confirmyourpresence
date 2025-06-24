@@ -25,13 +25,31 @@
         margin-top: 50px;
     }
 
-    .btn-custom {
-        background-color: #a65f46;
-        color: white;
+    .button-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        background-color: #fafafa;
+        transition: transform 0.2s;
+        height: 100%;
+        color: inherit;
     }
 
-    .btn-custom:hover {
-        background-color: #8b4f3a;
+    .button-card:hover {
+        transform: scale(1.02);
+    }
+
+    .button-card i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #a0522d;
+    }
+
+    .button-card h5 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #3b6d50;
     }
 
     h2 {
@@ -41,16 +59,28 @@
 {% endblock style %}
 {% block content %}
 <div class="container text-center">
-    <h3>Seja bem vindo!</h3>
+    <h2>Seja bem vindo!</h3>
 
-    <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-        <a href="{% url 'list_verify' %}" class="btn btn-custom btn-lg">
-            <i class="fas fa-user-check"></i> Confirmar a prensença
-        </a>
-        <a href="{% url 'gift_list' %}" class="btn btn-custom btn-lg">
-            <i class="fas fa-gift me-2"></i> Ver lista de presentes
-        </a>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-center gap-3 mt-4 flex-wrap">
+        <div class="col">
+            <a href="{% url 'list_verify' %}" style="text-decoration: none; color: inherit;">
+                <div class="button-card h-100 d-flex flex-column">
+                    <i class="fas fa-user-check"></i> 
+                    
+                    <h5>Confirmar a presença</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="{% url 'gift_list' %}" style="text-decoration: none; color: inherit;">
+                <div class="button-card h-100 d-flex flex-column">
+                    <i class="fas fa-gift me-2"></i>  
+                    
+                    <h5>Ver lista de presentes</h5>
+                </div>
+            </a>
+        </div>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock content %}
