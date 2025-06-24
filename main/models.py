@@ -113,7 +113,9 @@ class Gift(models.Model):
 
             name = line[0]
             price = line[1]
-            price = float(price.lstrip('R$ ').replace(",", "."))
+            price_treated = re.sub(r'[^0-9.,]', '', price)
+            price_treated = price_treated.replace(',', '.')
+            price = float(price_treated)
             image_url = line[2]
             product_url = line[3]
 
