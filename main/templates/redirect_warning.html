@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Atenção antes de prosseguir{% endblock %}
+{% block style %}
+<style>
+    .warning-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #fff9f0;
+        border: 1px solid #e6c8a5;
+        border-radius: 10px;
+        text-align: center;
+        color: #5c3a1e;
+        font-size: 1.1rem;
+    }
+
+    .btn-disabled {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="warning-container">
+    <p>
+        Caro convidado, você será redirecionado para o site do produto que tanto desejamos. Caso pretenda nos presentear com o produto em mãos, por favor
+        <strong>nos avise quanto efetuar a compra ou se estiver planejando efetuá-la</strong> — isso irá nos ajudar a evitar presentes repetidos e demais mal-entendidos.
+        Contamos com a sua compreensão e <strong>te agradecemos</strong> por estar participando desse momento tão especial.
+    </p>
+
+    <button id="proceed-button" class="btn btn-custom mt-3 btn-disabled">
+        Aguarde 15 segundos...
+    </button>
+</div>
+
+<script>
+    const button = document.getElementById("proceed-button");
+    let seconds = 15;
+
+    const interval = setInterval(() => {
+        seconds--;
+        button.innerText = seconds > 0 ? `Aguarde ${seconds} segundos...` : "Entendi";
+        if (seconds === 0) {
+            button.classList.remove("btn-disabled");
+            button.disabled = false;
+            clearInterval(interval);
+        }
+    }, 1000);
+
+    button.addEventListener("click", () => {
+        window.location.href = "{{ gift.product_url }}";
+    });
+</script>
+{% endblock %}
