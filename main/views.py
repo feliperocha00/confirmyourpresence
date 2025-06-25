@@ -10,10 +10,10 @@ def admin(request):
     return render(request, "admin_page.html")
 
 def success(request):
-    return render(request, "success.html")
+    return render(request, "confirmation/success.html")
 
 def notfound(request):
-    return render(request, "not_found.html")
+    return render(request, "guest/not_found.html")
 
 def already_confirmed(request):
     if request.method == "POST":
@@ -21,13 +21,13 @@ def already_confirmed(request):
         guests = form.find_number(form.pk.get('Telefone'))
         if guests:
             if any([g.confirm for g in guests]):
-                return render(request, "confirm.html", {'guests': guests})
+                return render(request, "confirmation/confirm.html", {'guests': guests})
             else:
-                return render(request, "already_confirmed.html", {'guests': guests})
+                return render(request, "confirmation/already_confirmed.html", {'guests': guests})
         else:
             return redirect("notfound")
         
-    return render(request, "already_confirmed.html")
+    return render(request, "guest/already_confirmed.html")
 
 def welcome(request):
     return render(request, "welcome.html")
@@ -38,13 +38,13 @@ def list_verify(request):
         guests = model.find_number(model.pk.get('Telefone'))
         if guests:
             if any([g.confirm for g in guests]):
-                return render(request, "confirm.html", {'guests': guests})
+                return render(request, "confirmation/confirm.html", {'guests': guests})
             else:
-                return render(request, "already_confirmed.html", {'guests': guests})
+                return render(request, "guest/already_confirmed.html", {'guests': guests})
         else:
             return redirect("notfound")
 
-    return render(request, "list_verify.html")
+    return render(request, "confirmation/list_verify.html")
 
 def confirm(request):
     if request.method == 'POST':
@@ -65,7 +65,7 @@ def confirm(request):
                     raise UserWarning("Convidado não encontrado. Comunique o Noivo!")
                 
         return redirect('success')
-    return render(request, "confirm.html")    
+    return render(request, "confirmation/confirm.html")    
 
 @login_required
 def confirmations(request):
@@ -93,12 +93,12 @@ def confirmations(request):
         wb.save(response)
         return response
 
-    return render(request, "confirmations.html", {"guests": guests})
+    return render(request, "confirmation/confirmations.html", {"guests": guests})
 
 @login_required
 def guests(request):
     guest_list = models.Guests.objects.all()
-    return render(request, "guests.html", {"guests": guest_list})
+    return render(request, "guest/guests.html", {"guests": guest_list})
     
 def import_guests(request):
     if request.method == "POST":
@@ -107,12 +107,12 @@ def import_guests(request):
         if models.Guests.import_guests(IoBytes):
             return redirect("guests")
     
-    return render(request, "import_guests.html")
+    return render(request, "guest/import_guests.html")
 
 def gift_list(request):
     gifts = models.Gift.objects.all()
 
-    return render(request, "gift_list.html", {"gifts": gifts})
+    return render(request, "gift/gift_list.html", {"gifts": gifts})
 
 def gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
@@ -125,7 +125,7 @@ def gift(request, gift_id):
     if request.method == "POST":
         return render(request, "gift.html", {"gift": gift, 'whatsapp_message': whatsapp_message})  # ou alguma tela de agradecimento
 
-    return render(request, "gift.html", {"gift": gift, 'whatsapp_message': whatsapp_message})
+    return render(request, "gift/gift.html", {"gift": gift, 'whatsapp_message': whatsapp_message})
 
 def edit_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
@@ -138,7 +138,7 @@ def edit_gift(request, gift_id):
     else:
         form = forms.GiftForm(instance=gift)
 
-    return render(request, "edit_gift.html", {"form": form, "gift": gift})
+    return render(request, "gift/edit_gift.html", {"form": form, "gift": gift})
 
 def delete_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
@@ -160,7 +160,7 @@ def add_gift(request):
     else:
         form = forms.GiftForm()
     
-    return render(request, "add_gift.html", {"form": form})
+    return render(request, "gift/add_gift.html", {"form": form})
 
 def import_gifts(request):
     if request.method == "POST":
@@ -169,8 +169,8 @@ def import_gifts(request):
         if models.Gift.import_gifts(IoBytes):
             return redirect("gift_list")
     
-    return render(request, "import_gifts.html")
+    return render(request, "gift/import_gifts.html")
 
 def gift_redirect_warning(request, gift_id):
     gift = get_object_or_404(models.Gift, id=gift_id)
-    return render(request, "redirect_warning.html", {"gift": gift})
+    return render(request, "gift/redirect_warning.html", {"gift": gift})
