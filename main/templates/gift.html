@@ -105,8 +105,8 @@
                 <i class="fab fa-whatsapp me-1"></i> 
                 Presentear o valor
             </button>
-
-            <button type="button" class="btn btn-custom" onclick="window.open('{{ gift.product_url }}', '_blank')">
+            <button type="button" class="btn btn-custom"
+                onclick="window.open('{% url 'gift_redirect_warning' gift.id %}', '_blank')">
                 <i class="fas fa-link me-1"></i> Ver produto
             </button>
         </div>
