@@ -166,3 +166,7 @@ def import_gifts(request):
             return redirect("gift_list")
     
     return render(request, "import_gifts.html")
+
+def gift_redirect_warning(request, gift_id):
+    gift = get_object_or_404(models.Gift, id=gift_id)
+    return render(request, "redirect_warning.html", {"gift": gift})

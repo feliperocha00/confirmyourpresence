@@ -19,4 +19,5 @@ urlpatterns = [
     path("gift/<int:gift_id>/give/", views.gift, name="gift"),
     path("gift/<int:gift_id>/edit/", views.edit_gift, name="edit_gift"),
     path("gift/<int:gift_id>/delete/", views.delete_gift, name="delete_gift"),
+    path("gift/<int:gift_id>/redirect/", views.gift_redirect_warning, name="gift_redirect_warning"),
 ]

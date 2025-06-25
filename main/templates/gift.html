@@ -103,10 +103,11 @@
             <button type="submit" class="btn btn-custom"
              onclick="return confirm('Tem certeza que deseja excluir este presente?')"
              formaction="{% url 'delete_gift' gift.id %}">
-                <img src="{% static 'img/icons8-foto-50.png' %}" alt="Ícone" style="width: 20px; height: 20px; margin-right: 8px;">
-                Presentear o valor
+             <img src="{% static 'img/icons8-foto-50.png' %}" alt="Ícone" style="width: 20px; height: 20px; margin-right: 8px;">
+             Presentear o valor
             </button>
-            <button type="button" class="btn btn-custom" onclick="window.open('{{ gift.product_url }}', '_blank')">
+            <button type="button" class="btn btn-custom"
+                onclick="window.open('{% url 'gift_redirect_warning' gift.id %}', '_blank')">
                 <i class="fas fa-link me-1"></i> Ver produto
             </button>
         </div>
