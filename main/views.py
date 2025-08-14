@@ -9,6 +9,9 @@ from openpyxl import Workbook
 def admin(request):
     return render(request, "admin_page.html")
 
+def intro(request):
+    return render(request, "intro.html")
+
 def success(request):
     return render(request, "confirmation/success.html")
 

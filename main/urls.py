@@ -3,7 +3,8 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path("", views.welcome, name="welcome"),
+    path("", views.intro, name="intro"),
+    path("welcome/", views.welcome, name="welcome"),
     path("admin/", views.admin, name="admin"),
     path("not-found/", views.notfound, name="notfound"),
     path("already-confirmed/", views.already_confirmed, name="already_confirmed"),

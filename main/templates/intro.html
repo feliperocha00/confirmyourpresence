@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Seja bem Vindo!{% endblock title %}
+{% block style %}
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Logo */
+        #logo {
+            width: 180px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        /* Texto romântico */
+        #romantic-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: #386438ff;
+            opacity: 0;
+            transform: translateY(-50px);
+            transition: opacity 2s ease, transform 2s ease;
+        }
+
+        /* Botão */
+        #continue-btn {
+            margin-top: 30px;
+            padding: 12px 28px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #3b6d50;
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #continue-btn:hover {
+            background-color: #386438ff;
+        }
+    </style>
+{% endblock style %}
+{% block content %}
+    <img id="logo" src="{% static 'img/logo.png' %}" alt="Logo">
+    <h1 id="romantic-text">Um momento especial está prestes a começar...</h1>
+    <button id="continue-btn">Entrar</button>
+
+    <script>
+        const logo = document.getElementById("logo");
+        const text = document.getElementById("romantic-text");
+        const btn = document.getElementById("continue-btn");
+
+        // 1. Logo aparece
+        setTimeout(() => {
+            logo.style.opacity = "1";
+        }, 200);
+
+        // 2. Logo some e texto aparece
+        setTimeout(() => {
+            logo.style.opacity = "0";
+            setTimeout(() => {
+                text.style.opacity = "1";
+                text.style.transform = "translateY(0)";
+            }, 2000);
+        }, 3000);
+
+        // 3. Botão aparece depois do texto
+        setTimeout(() => {
+            btn.style.opacity = "1";
+        }, 6500);
+
+        // 4. Ao clicar, vai para a página welcome
+        btn.addEventListener("click", () => {
+            window.location.href = "{% url 'welcome' %}";
+        });
+    </script>
+{% endblock content %}
