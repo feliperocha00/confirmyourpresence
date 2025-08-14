@@ -38,9 +38,9 @@ def list_verify(request):
         guests = model.find_number(model.pk.get('Telefone'))
         if guests:
             if any([g.confirm for g in guests]):
-                return render(request, "confirmation/confirm.html", {'guests': guests})
+                return render(request, "confirmation/already_confirmed.html", {'guests': guests})
             else:
-                return render(request, "guest/already_confirmed.html", {'guests': guests})
+                return render(request, "confirmation/confirm.html", {'guests': guests})
         else:
             return redirect("notfound")
 
