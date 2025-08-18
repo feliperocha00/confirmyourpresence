@@ -95,9 +95,6 @@ class Gift(models.Model):
     def find_gift(self, gift_id):
         gift = Gift.objects.filter(id=gift_id).first()
         return gift
-
-    # def buy(self):
-    #     return True
         
     def import_gifts(IoBytes):
         data_file = io.StringIO(IoBytes.getvalue().decode('utf-8'))
