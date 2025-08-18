@@ -133,7 +133,7 @@ def edit_gift(request, gift_id):
         form = forms.GiftForm(request.POST, instance=gift)
         if form.is_valid():
             gift.save()
-            return redirect("gift") 
+            return render(request, "gift/gift.html", {"gift": gift})
     else:
         form = forms.GiftForm(instance=gift)
 
