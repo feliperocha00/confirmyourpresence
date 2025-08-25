@@ -7,8 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
-                "runserver",
-                "7000",
+                "runserver"
             ],
             "console": "integratedTerminal",
             "justMyCode": false,
