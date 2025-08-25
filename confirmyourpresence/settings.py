@@ -25,8 +25,12 @@ SECRET_KEY = 'django-insecure-w9t1bb_j(mwkg-nzlw4ict=5g&ap*zszd#b4#a7ih=qd*_4x!%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['confirmyourpresence.ddns.net']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://confirmyourpresence.ddns.net",
+    "https://www.confirmyourpresence.ddns.net",
+]
 
 # Application definition
 
