@@ -38,7 +38,7 @@ def welcome(request):
 def list_verify(request):
     if request.method == "POST":
         model = models.ListVerify(request.POST)
-        guests = model.find_number(model.pk.get('Telefone'))
+        guests = model.find_number(model.pk.get('phone'))
         if guests:
             if any([g.confirm for g in guests]):
                 return render(request, "confirmation/already_confirmed.html", {'guests': guests})

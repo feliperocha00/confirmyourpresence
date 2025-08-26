@@ -1,88 +1,419 @@
+
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Bem Vindo!{% endblock title %}
 {% block style %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
+    :root {
+        --primary-green: #3b6d50;
+        --light-green: #5a8a6f;
+        --card-bg: #ffffff;
+        --card-hover: #f8fffe;
+        --text-color: #2c3e50;
+        --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.15);
+        --border-radius: 16px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     body {
-        font-family: Arial, sans-serif;
-        background-image: url('{% static "img/flowers_background.jpeg" %}');
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, rgba(91, 138, 111, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%),
+                    url('{% static "img/flowers_background.jpeg" %}');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        color: #4a4a4a;
-    }
-
-    .container {
-        width: 70%;
-        max-width: 600px;
-        margin: auto;
+        color: var(--text-color);
+        min-height: 100vh;
+        line-height: 1.6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        margin-top: 50px;
     }
 
-    .btn-custom {
-        background-color: #3b6d50;
+    .form-container {
+        width: 100%;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-medium);
+        padding: 3rem 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .form-title {
+        color: var(--primary-green);
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .form-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+        border-radius: 2px;
+    }
+
+    .phone-group {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .phone-label {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 1rem;
+    }
+
+    .phone-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .phone-icon {
+        position: absolute;
+        left: 1rem;
+        color: var(--primary-green);
+        font-size: 1.1rem;
+        z-index: 2;
+        transition: var(--transition);
+    }
+
+    .icon-links {
+        color: var(--primary-green);
+        font-size: 1.1rem;
+        transition: var(--transition);
+    }
+
+    .phone-input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        border: 2px solid #e9ecef;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        background: var(--card-bg);
+        color: var(--text-color);
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .phone-input:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 0 3px rgba(91, 138, 111, 0.1);
+        background: var(--card-hover);
+    }
+
+    .phone-input:focus + .phone-icon {
+        color: var(--light-green);
+        transform: scale(1.05);
+    }
+
+    .phone-input::placeholder {
+        color: #adb5bd;
+        opacity: 0.8;
+    }
+
+    .phone-input:hover:not(:focus) {
+        border-color: var(--light-green);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .validation-message {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #dc3545;
+        display: none;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .validation-message.show {
+        display: flex;
+    }
+
+    .validation-message.valid {
+        color: var(--primary-green);
+    }
+
+    .phone-input.valid {
+        border-color: var(--primary-green);
+        background: rgba(91, 138, 111, 0.05);
+    }
+
+    .phone-input.invalid {
+        border-color: #dc3545;
+        background: rgba(220, 53, 69, 0.05);
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+        border: none;
         color: white;
+        padding: 1rem 2rem;
+        border-radius: var(--border-radius);
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+        margin-top: 1rem;
     }
 
-    .btn-custom:hover {
-        background-color: #386438ff;
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
     }
 
-    h2 {
-        color: #3b6d50;
+    .submit-btn:active {
+        transform: translateY(0);
     }
 
-    .icon-links a {
-        color: #3b6d50;
-        /* tom terroso para combinar com o tema */
-        font-size: 28px;
-        transition: color 0.3s ease;
+    .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
     }
 
-    .icon-links a:hover {
-        color: #386438ff;
-        /* tom mais escuro ao passar o mouse */
+    /* Responsive */
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 2rem 1.5rem;
+            margin: 1rem;
+        }
+        
+        .form-title {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* Animações */
+    .form-container {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Acessibilidade */
+    .phone-input:focus {
+        outline: 2px solid var(--primary-green);
+        outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+        }
     }
 </style>
 {% endblock style %}
 {% block script %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#phone').mask('(00) 00000-0000');
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('phone');
+        const validationMessage = document.getElementById('phone-validation');
+        const messageText = validationMessage.querySelector('.message-text');
+        const messageIcon = validationMessage.querySelector('i');
+        const submitBtn = document.querySelector('.submit-btn');
+
+        // Máscara de telefone
+        function applyPhoneMask(value) {
+            // Remove tudo que não é dígito
+            value = value.replace(/\D/g, '');
+            
+            // Aplica a máscara baseada no tamanho
+            if (value.length <= 10) {
+                // Telefone fixo: (XX) XXXX-XXXX
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            } else {
+                // Celular: (XX) XXXXX-XXXX
+                value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+            }
+            
+            return value;
+        }
+
+        // Validação de telefone
+        function validatePhone(phone) {
+            const cleanPhone = phone.replace(/\D/g, '');
+            
+            // Verifica se tem 10 ou 11 dígitos
+            if (cleanPhone.length === 10 || cleanPhone.length === 11) {
+                // Verifica se é um DDD válido (códigos brasileiros)
+                const ddd = parseInt(cleanPhone.substring(0, 2));
+                const validDDDs = [
+                    11, 12, 13, 14, 15, 16, 17, 18, 19, // São Paulo
+                    21, 22, 24, // Rio de Janeiro
+                    27, 28, // Espírito Santo
+                    31, 32, 33, 34, 35, 37, 38, // Minas Gerais
+                    41, 42, 43, 44, 45, 46, // Paraná
+                    47, 48, 49, // Santa Catarina
+                    51, 53, 54, 55, // Rio Grande do Sul
+                    61, // Distrito Federal
+                    62, 64, // Goiás
+                    63, // Tocantins
+                    65, 66, // Mato Grosso
+                    67, // Mato Grosso do Sul
+                    68, // Acre
+                    69, // Rondônia
+                    71, 73, 74, 75, 77, // Bahia
+                    79, // Sergipe
+                    81, 87, // Pernambuco
+                    82, // Alagoas
+                    83, // Paraíba
+                    84, // Rio Grande do Norte
+                    85, 88, // Ceará
+                    86, 89, // Piauí
+                    91, 93, 94, // Pará
+                    92, 97, // Amazonas
+                    95, // Roraima
+                    96, // Amapá
+                    98, 99 // Maranhão
+                ];
+                
+                return validDDDs.includes(ddd);
+            }
+            
+            return false;
+        }
+
+        // Event listeners
+        phoneInput.addEventListener('input', function(e) {
+            const maskedValue = applyPhoneMask(e.target.value);
+            e.target.value = maskedValue;
+            
+            // Validação em tempo real
+            if (maskedValue.length >= 14) { // (XX) XXXX-XXXX ou (XX) XXXXX-XXXX
+                if (validatePhone(maskedValue)) {
+                    phoneInput.classList.remove('invalid');
+                    phoneInput.classList.add('valid');
+                    validationMessage.classList.remove('show');
+                    submitBtn.disabled = false;
+                } else {
+                    phoneInput.classList.remove('valid');
+                    phoneInput.classList.add('invalid');
+                    validationMessage.classList.add('show');
+                    validationMessage.classList.remove('valid');
+                    messageIcon.className = 'fas fa-exclamation-circle';
+                    messageText.textContent = 'Número de telefone inválido';
+                    submitBtn.disabled = true;
+                }
+            } else if (maskedValue.length > 0) {
+                phoneInput.classList.remove('valid', 'invalid');
+                validationMessage.classList.remove('show');
+                submitBtn.disabled = true;
+            } else {
+                phoneInput.classList.remove('valid', 'invalid');
+                validationMessage.classList.remove('show');
+                submitBtn.disabled = true;
+            }
+        });
+
+        phoneInput.addEventListener('blur', function() {
+            if (this.value.length > 0 && !validatePhone(this.value)) {
+                this.classList.add('invalid');
+                validationMessage.classList.add('show');
+            }
+        });
+
+        // Submissão do formulário
+        {% comment %} document.getElementById('phoneForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validatePhone(phoneInput.value)) {
+                // Mostra mensagem de sucesso
+                validationMessage.classList.add('show', 'valid');
+                messageIcon.className = 'fas fa-check-circle';
+                messageText.textContent = 'Telefone válido!';
+                
+                // Simula envio
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Enviando...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Enviado!';
+                    setTimeout(() => {
+                        submitBtn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Confirmar';
+                        submitBtn.disabled = false;
+                    }, 2000);
+                }, 1500);
+            }
+        }); {% endcomment %}
+
+        // Inicialização
+        submitBtn.disabled = true;
     });
 </script>
 {% endblock script %}
 {% block content %}
-<div class="container text-center">
-    
+ <div class="form-container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="icon-links">
             <a href="javascript:history.back()" title="Voltar">
                 <i class="icon-links fa-solid fa-chevron-left"></i>
             </a>
         </div>
-        <h2 class="text-center flex-grow-1 mb-0">Você está na lista?</h2>
+        <h1 class="form-title text-center flex-grow-1 mb-0">Você está na lista?</h1>
     </div>
-
-    <h5>
-        <form method="post" class="text-start">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="phone" class="form-label">Telefone:</label>
-                <input type="text" id="phone" name="Telefone" class="form-control" required>
+        
+    <form id="phoneForm" method="post">
+        {% csrf_token %}
+        <div class="phone-group">
+            <label for="phone" class="phone-label">
+                Telefone
+            </label>
+            <div class="phone-input-wrapper">
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    class="phone-input"
+                    placeholder="(00) 00000-0000"
+                    maxlength="15"
+                    required
+                    aria-describedby="phone-validation"
+                >
+                <i class="fas fa-phone phone-icon" aria-hidden="true"></i>
             </div>
-
-            <button type="submit" class="btn btn-custom w-100">Buscar</button>
-        </form>
+            <div id="phone-validation" class="validation-message" role="alert">
+                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                <span class="message-text">Digite um número de telefone válido</span>
+            </div>
+        </div>
+        
+        <button type="submit" class="submit-btn">
+            <i class="fas fa-check" aria-hidden="true"></i>
+            Confirmar
+        </button>
+    </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock content %}
