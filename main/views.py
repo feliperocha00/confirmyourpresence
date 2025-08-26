@@ -120,11 +120,16 @@ def gift_list(request):
 def gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
     
+    whatsapp_message = (
+        f"Oi Bia e Felipe! Desejo te presentear com esse presente: "
+        f"{gift.name[:20]}... R$ {gift.price:.2f}. Pode me encaminhar o código copia e cola com o valor?"
+    )
+    
     if request.method == "POST":
         gift.taken = True
-        return redirect("success")  # ou alguma tela de agradecimento
+        return render(request, "gift.html", {"gift": gift, 'whatsapp_message': whatsapp_message})
 
-    return render(request, "gift/gift.html", {"gift": gift})
+    return render(request, "gift/gift.html", {"gift": gift, 'whatsapp_message': whatsapp_message})
 
 def edit_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
