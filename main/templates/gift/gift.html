@@ -102,7 +102,7 @@
         <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
             <button type="button" class="btn btn-success"
                 onclick="window.open('https://wa.me/5511973436285?text={{ whatsapp_message|urlencode }}', '_blank')">
-             <img src="{% static 'img/icons8-foto-50.png' %}" alt="Ícone" style="width: 20px; height: 20px; margin-right: 8px;">
+             {% comment %} <i class="fa-solid fa-dollar-sign"></i> {% endcomment %}
              Presentear o valor
             </button>
             <button type="button" class="btn btn-custom"
