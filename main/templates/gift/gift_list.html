@@ -8,117 +8,545 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
+    :root {
+        --primary-green: #3b6d50;
+        --light-green: #5a8a6f;
+        --card-bg: #ffffff;
+        --card-hover: #f8fffe;
+        --text-color: #2c3e50;
+        --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.15);
+        --border-radius: 16px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     body {
-        background-image: url('{% static "img/flowers_background.jpeg" %}');
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, rgba(91, 138, 111, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%),
+                    url('{% static "img/flowers_background.jpeg" %}');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
+        color: var(--text-color);
+        min-height: 100vh;
+        line-height: 1.6;
     }
 
-    .container {
-        margin-top: 50px;
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    .main-container {
+        padding: 2rem 0;
+        min-height: 100vh;
+    }
+
+    .gift-list-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-medium);
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .back-button {
+        position: absolute;
+        left: 0;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid var(--primary-green);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-green);
+        text-decoration: none;
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+    }
+
+    .back-button:hover {
+        background: var(--primary-green);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .page-title {
+        color: var(--primary-green);
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        flex-grow: 1;
+    }
+
+    .page-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+        border-radius: 2px;
+    }
+
+    .action-buttons {
+        position: absolute;
+        right: 0;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .action-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid var(--primary-green);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-green);
+        text-decoration: none;
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+        font-size: 1.2rem;
+    }
+
+    .action-btn:hover {
+        background: var(--primary-green);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+        text-decoration: none;
+    }
+
+    .gifts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
     }
 
     .gift-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        padding: 15px;
+        background: var(--card-bg);
+        border: 2px solid transparent;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
         text-align: center;
-        background-color: #fafafa;
-        transition: transform 0.2s;
-        height: 100%;
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        text-decoration: none;
         color: inherit;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .gift-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(91, 138, 111, 0.1), transparent);
+        transition: var(--transition);
     }
 
     .gift-card:hover {
-        transform: scale(1.02);
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-hover);
+        border-color: var(--primary-green);
+        background: var(--card-hover);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .gift-card:hover::before {
+        left: 100%;
     }
 
     .gift-img {
         width: 100%;
-        height: 180px;
+        height: 200px;
         object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 10px;
+        border-radius: calc(var(--border-radius) - 4px);
+        margin-bottom: 1rem;
+        transition: var(--transition);
     }
 
-    .btn-custom {
-        background-color: #3b6d50;
-        color: white;
+    .gift-card:hover .gift-img {
+        transform: scale(1.03);
+    }
+
+    .gift-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--primary-green);
+        margin-bottom: 0.5rem;
+        flex-grow: 1;
+    }
+
+    .gift-price {
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    .gift-action {
+        margin-top: auto;
+    }
+
+    .btn-gift {
+        background: linear-gradient(135deg, var(--primary-green), var(--light-green));
         border: none;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: calc(var(--border-radius) - 4px);
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
     }
 
-    .btn-custom:hover {
-        background-color: #386438ff;
-    }
-    
-    .icon-links a {
-        color: #3b6d50;
-        /* tom terroso para combinar com o tema */
-        font-size: 28px;
-        transition: color 0.3s ease;
+    .btn-gift:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+        color: white;
     }
 
-    .icon-links a:hover {
-        color: #386438ff;
-        /* tom mais escuro ao passar o mouse */
+    .btn-gift:active {
+        transform: translateY(0);
+    }
+
+    .btn-taken {
+        background: #6c757d;
+        border: none;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: calc(var(--border-radius) - 4px);
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: not-allowed;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        opacity: 0.8;
+    }
+
+    .gift-card.taken {
+        opacity: 0.7;
+        filter: grayscale(0.3);
+    }
+
+    .gift-card.taken:hover {
+        transform: translateY(-4px);
+    }
+
+    /* Loading animation */
+    .gift-card {
+        animation: fadeInUp 0.6s ease-out forwards;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .gift-card:nth-child(1) { animation-delay: 0.1s; }
+    .gift-card:nth-child(2) { animation-delay: 0.2s; }
+    .gift-card:nth-child(3) { animation-delay: 0.3s; }
+    .gift-card:nth-child(4) { animation-delay: 0.4s; }
+    .gift-card:nth-child(5) { animation-delay: 0.5s; }
+    .gift-card:nth-child(6) { animation-delay: 0.6s; }
+    .gift-card:nth-child(7) { animation-delay: 0.7s; }
+    .gift-card:nth-child(8) { animation-delay: 0.8s; }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .gifts-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+        }
+        
+        .header-section {
+            margin-bottom: 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .gift-list-container {
+            padding: 1.5rem;
+            margin: 1rem;
+        }
+        
+        .header-section {
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+        }
+        
+        .back-button,
+        .action-buttons {
+            position: static;
+        }
+        
+        .action-buttons {
+            order: -1;
+        }
+        
+        .page-title {
+            font-size: 1.8rem;
+            order: 1;
+        }
+        
+        .back-button {
+            order: 2;
+        }
+        
+        .gifts-grid {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .gifts-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .gift-card {
+            padding: 1rem;
+        }
+        
+        .gift-img {
+            height: 150px;
+        }
+        
+        .gift-title {
+            font-size: 1rem;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+        }
+        
+        .action-btn,
+        .back-button {
+            width: 45px;
+            height: 45px;
+            font-size: 1rem;
+        }
+    }
+
+    /* Focus states for accessibility */
+    .gift-card:focus,
+    .action-btn:focus,
+    .back-button:focus {
+        outline: 2px solid var(--primary-green);
+        outline-offset: 2px;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .gift-card {
+            border: 2px solid var(--primary-green);
+        }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #6c757d;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: var(--primary-green);
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .empty-state h3 {
+        color: var(--primary-green);
+        margin-bottom: 1rem;
     }
 </style>
 {% endblock style %}
 
 {% block content %}
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="icon-links">
-            <a href="javascript:history.back()" title="Voltar">
-                <i class="icon-links fa-solid fa-chevron-left"></i>
-            </a>
-        </div>
+<div class="main-container">
+    <div class="container-fluid">
+        <div class="gift-list-container">
+            <div class="header-section">
+                <a href="javascript:history.back()" class="back-button" title="Voltar" aria-label="Voltar para página anterior">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </a>
 
-        <h2 class="text-center mb-4" style="color: #3b6d50;">Lista de Presentes</h2>
-        
-        <div class="icon-links">
-            <a href="{% url 'add_gift' %}" title="Adicionar Presente">
-                <i class="icon-links fa-solid fa-circle-plus"></i>
-            </a>
-
-            <a href="{% url 'import_gifts' %}" title="Importar Presentes">
-                <i class="icon-links fas fa-arrow-circle-down"></i>
-            </a>
-        </div>
-    </div>
-    
-    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 g-4">
-        {% for gift in gifts %}
-        <div class="col">
-            <a href="{% url 'gift' gift.id %}" style="text-decoration: none; color: inherit;">
-            <div class="gift-card h-100 d-flex flex-column">
-                <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img">
-
-                <h5>{{ gift.name }}</h5>
+                <h1 class="page-title">Lista de Presentes</h1>
                 
-                {% if gift.price %}
-                <p class="text-muted">Valor sugerido: R$ {{ gift.price }}</p>
-                {% endif %}
-                
-                {% if gift.taken %}
-                <button class="btn btn-secondary mt-2" disabled>Já presenteado</button>
-                {% else %}
-                <form method="post" action="{% url 'gift' gift.id %}" class="mt-auto">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-custom mt-2">
-                        <i class="fas fa-gift me-1"></i> Presentear
-                    </button>
-                </form>
-                {% endif %}
+                <div class="action-buttons">
+                    <a href="{% url 'add_gift' %}" class="action-btn" title="Adicionar Presente" aria-label="Adicionar novo presente">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="{% url 'import_gifts' %}" class="action-btn" title="Importar Presentes" aria-label="Importar presentes">
+                        <i class="fas fa-download" aria-hidden="true"></i>
+                    </a>
+                </div>
             </div>
-            </a>
+            
+            {% if gifts %}
+            <div class="gifts-grid">
+                {% for gift in gifts %}
+                <div class="gift-card {% if gift.taken %}taken{% endif %}" role="article" aria-labelledby="gift-{{ gift.id }}-title">
+                    <a href="{% url 'gift' gift.id %}" style="text-decoration: none; color: inherit; display: contents;">
+                        <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img" loading="lazy">
+
+                        <h2 id="gift-{{ gift.id }}-title" class="gift-title">{{ gift.name }}</h2>
+                        
+                        {% if gift.price %}
+                        <p class="gift-price">
+                            <i class="fas fa-tag me-1" aria-hidden="true"></i>
+                            Valor sugerido: R$ {{ gift.price }}
+                        </p>
+                        {% endif %}
+                        
+                        <div class="gift-action">
+                            {% if gift.taken %}
+                            <button class="btn-taken" disabled aria-label="Presente já foi escolhido por alguém">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                Já presenteado
+                            </button>
+                            {% else %}
+                            <form method="post" action="{% url 'gift' gift.id %}" class="w-100">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-gift" aria-label="Escolher este presente: {{ gift.name }}">
+                                    <i class="fas fa-gift" aria-hidden="true"></i>
+                                    Presentear
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-gift" aria-hidden="true"></i>
+                <h3>Nenhum presente cadastrado</h3>
+                <p>Adicione o primeiro presente à lista para começar!</p>
+                <a href="{% url 'add_gift' %}" class="btn btn-gift mt-3" style="width: auto; display: inline-flex;">
+                    <i class="fas fa-plus me-2" aria-hidden="true"></i>
+                    Adicionar Primeiro Presente
+                </a>
+            </div>
+            {% endif %}
         </div>
-        {% endfor %}
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Adiciona loading state nos botões de presentear
+        const giftButtons = document.querySelectorAll('.btn-gift[type="submit"]');
+        
+        giftButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Previne múltiplos cliques
+                if (this.disabled) {
+                    e.preventDefault();
+                    return;
+                }
+                
+                // Adiciona estado de loading
+                this.disabled = true;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin me-2" aria-hidden="true"></i>Processando...';
+                
+                // Re-enable after 5 seconds as fallback
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fas fa-gift" aria-hidden="true"></i> Presentear';
+                }, 5000);
+            });
+        });
+
+        // Lazy loading para imagens
+        const images = document.querySelectorAll('.gift-img');
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        // Adiciona animação de hover suave nos cards
+        const giftCards = document.querySelectorAll('.gift-card');
+        giftCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+    });
+</script>
 {% endblock content %}
