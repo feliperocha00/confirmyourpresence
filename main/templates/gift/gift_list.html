@@ -60,7 +60,7 @@
     }
 
     .back-button {
-        position: absolute;
+        position: static;
         left: 0;
         background: rgba(255, 255, 255, 0.9);
         border: 2px solid var(--primary-green);
@@ -361,7 +361,7 @@
         }
         
         .gift-title {
-            font-size: 1rem;
+            font-size: 0.5rem;
         }
         
         .page-title {
@@ -373,6 +373,11 @@
             width: 45px;
             height: 45px;
             font-size: 1rem;
+        }
+
+        .btn-gift, .btn-taken {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
         }
     }
 
@@ -426,6 +431,8 @@
     <div class="container-fluid">
         <div class="gift-list-container">
             <div class="header-section">
+                <a href="javascript:history.back()" title="Voltar">
+
                 <a href="javascript:history.back()" class="back-button" title="Voltar" aria-label="Voltar para página anterior">
                     <i class="fas fa-chevron-left" aria-hidden="true"></i>
                 </a>
