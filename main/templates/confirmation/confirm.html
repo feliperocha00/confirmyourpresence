@@ -53,8 +53,10 @@
         color: var(--primary-green);
         font-size: 2.5rem;
         font-weight: 600;
-        margin-bottom: 2rem;
+        margin: 0 auto;
+        text-align: center;
         position: relative;
+        flex-grow: 1;
     }
 
     .welcome-title::after {
@@ -76,6 +78,90 @@
         max-width: 500px;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+    
+    .back-button {
+        position: static;
+        left: 0;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid var(--primary-green);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-green);
+        text-decoration: none;
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+    }
+
+    .back-button:hover {
+        background: var(--primary-green);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .custom-checkbox {
+        display: inline-block;
+        position: relative;
+        /* cursor: not-allowed; já que está desabilitado */
+    }
+
+    .custom-checkbox input[type="checkbox"] {
+        opacity: 0;
+        position: absolute;
+        cursor: inherit;
+        height: 0;
+        width: 0;
+    }
+
+    .custom-checkbox span {
+        height: 20px;
+        width: 20px;
+        background-color: #f0f0f0;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        display: inline-block;
+        vertical-align: middle;
+        transition: background-color 0.2s, border-color 0.2s;
+        position: relative;
+    }
+
+    /* Estilo quando marcada */
+    .custom-checkbox input:checked+span {
+        background-color: #549463;
+        /* verde */
+        border-color: #549463;
+    }
+
+    /* Check visível como pseudo-elemento */
+    .custom-checkbox span::after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    /* Mostrar o check quando marcado */
+    .custom-checkbox input:checked+span::after {
+        display: block;
     }
 
 
@@ -145,12 +231,19 @@
 
 <div class="main-container">
     <div class="welcome-card text-center">
-        <h1 class="welcome-title">Confirme sua Presença</h1>
+        <div class="header-section">
+            <a href="javascript:history.back()" class="back-button" title="Voltar" aria-label="Voltar para página anterior">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            </a>
+            
+            <h1 class="welcome-title">Confirme sua Presença</h1>
+        </div>
         <p class="subtitle">
             Insira o número do seu telefone que entramos em contato com você.
         </p>
-        
-        <table class="table table-bordered table-striped" name="guests">
+        <form method="post" class="text-start" action="{% url 'confirm_presence' %}">
+            {% csrf_token %}
+            <table class="table table-bordered table-striped" name="guests">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -180,6 +273,7 @@
                 <i class="fas fa-check" aria-hidden="true"></i>
                 Confirmar
             </button>
+        </form>
     </div>
 </div>
 {% comment %} 
