@@ -21,12 +21,9 @@ def notfound(request):
 def already_confirmed(request):
     if request.method == "POST":
         form = models.Welcome(request.POST)
-        guests = form.find_number(form.pk.get('Telefone'))
+        guests = form.find_number(form.pk.get('phone'))
         if guests:
-            if any([g.confirm for g in guests]):
-                return render(request, "confirmation/confirm.html", {'guests': guests})
-            else:
-                return render(request, "confirmation/already_confirmed.html", {'guests': guests})
+            return render(request, "confirmation/confirm.html", {'guests': guests})
         else:
             return redirect("notfound")
         
@@ -41,7 +38,7 @@ def list_verify(request):
         guests = model.find_number(model.pk.get('phone'))
         if guests:
             if any([g.confirm for g in guests]):
-                return render(request, "confirmation/already_confirmed.html", {'guests': guests})
+                return render(request, "confirmation/already_confirmed.html", {'guests': guests, 'phone': model.pk.get('phone')})
             else:
                 return render(request, "confirmation/confirm.html", {'guests': guests})
         else:
