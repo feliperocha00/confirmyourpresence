@@ -241,15 +241,18 @@
         </p>
         
         <div class="action-buttons">
-            <a href="{% url 'confirm' %}" class="action-card" 
-               role="button" 
-               aria-label="Confirmar sua presença no evento">
-                <i class="fas fa-user-check card-icon" aria-hidden="true"></i>
-                <h2 class="card-title">Confirmar Presença</h2>
-                <p class="card-description">
-                    Atualizar confirmação
-                </p>
-            </a>
+            <form method="post" action="{% url 'already_confirmed' %}">
+                {% csrf_token %}
+                <input type="hidden" name="phone" id="phone" value="{{ phone }}">
+                <button type="submit" class="action-card" 
+                aria-label="Confirmar sua presença no evento">
+                    <i class="fas fa-user-check card-icon" aria-hidden="true"></i>
+                    <h2 class="card-title">Atualizar</h2>
+                    <p class="card-description">
+                        Atualizar confirmação de Presença
+                    </p>
+                </button>
+            </form>
             
             <a href="{% url 'gift_list' %}" class="action-card" 
                role="button" 
