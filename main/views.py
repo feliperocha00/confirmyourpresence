@@ -98,6 +98,10 @@ def confirmations(request):
 @login_required
 def guests(request):
     guest_list = models.Guests.objects.all()
+    
+    if request.method == "POST":
+        print("a")
+        
     return render(request, "guest/guests.html", {"guests": guest_list})
     
 def import_guests(request):
