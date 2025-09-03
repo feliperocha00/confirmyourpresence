@@ -87,26 +87,28 @@
             {% endif %}
             {% for guest in guests %}
             <tr>
-                <td>
-                    {{ forloop.counter }}
-                </td>
-                <td>
-                    {{ guest.name }}
-                </td>
-                <td>
-                    {{ guest.phone }}
-                </td>
-                <td>
-                    {% if guest.parent %}
-                    {{ guest.parent }}
-                    {% endif %}
-                </td>
-                <td>
-                    <button type="submit">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-                
+                <form method="post" class="text-start" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ guest.name }}
+                    </td>
+                    <td>
+                        {{ guest.phone }}
+                    </td>
+                    <td>
+                        {% if guest.parent %}
+                        {{ guest.parent }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button type="submit">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </form>
             </tr>
             {% endfor %}
         </tbody>

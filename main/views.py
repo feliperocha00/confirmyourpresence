@@ -96,15 +96,23 @@ def confirmations(request):
     return render(request, "confirmation/confirmations.html", {"guests": guests})
 
 @login_required
-def guests(request):
-    guest_list = models.Guests.objects.all()
+def guest_edit(request, guest_id):
+    guest = get_object_or_404(models.Guests, id=guest_id)
     
     if request.method == "POST":
-        print("a")
+        guest.delete()
+        messages.success(request, "Convidado Excluído")
+        return redirect("guest_list")
         
+    return render(request, "guest/guest.html", {"guest": guest})
+
+@login_required
+def guest_list(request):
+    guest_list = models.Guests.objects.all()
     return render(request, "guest/guests.html", {"guests": guest_list})
-    
-def import_guests(request):
+
+@login_required
+def import_guest_list(request):
     if request.method == "POST":
         IoBytes = request.FILES.get('file').file
 
@@ -113,6 +121,7 @@ def import_guests(request):
     
     return render(request, "guest/import_guests.html")
 
+# GIFTS
 def gift_list(request):
     gifts = models.Gift.objects.all()
 
@@ -132,6 +141,7 @@ def gift(request, gift_id):
 
     return render(request, "gift/gift.html", {"gift": gift, 'whatsapp_message': whatsapp_message})
 
+@login_required
 def edit_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
     
@@ -145,6 +155,7 @@ def edit_gift(request, gift_id):
 
     return render(request, "gift/edit_gift.html", {"form": form, "gift": gift})
 
+@login_required
 def delete_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
     
@@ -153,6 +164,7 @@ def delete_gift(request, gift_id):
         messages.success(request, "Presente Excluído")
         return redirect("gift_list")
 
+@login_required
 def add_gift(request):
     if request.method == "POST":
         form = forms.GiftForm(request.POST)
@@ -167,6 +179,7 @@ def add_gift(request):
     
     return render(request, "gift/add_gift.html", {"form": form})
 
+@login_required
 def import_gifts(request):
     if request.method == "POST":
         IoBytes = request.FILES.get('file').file
