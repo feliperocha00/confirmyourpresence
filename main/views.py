@@ -97,19 +97,31 @@ def confirmations(request):
 
 @login_required
 def guest_edit(request, guest_id):
-    guest = get_object_or_404(models.Guests, id=guest_id)
+    guest = get_object_or_404(models.Guests, pk=guest_id)
+    
+    if request.method == "POST":
+        form = forms.GuestForm(request.POST, instance=guest)
+        if form.is_valid():
+            guest.save()
+            return render(request, "guest/guest.html", {"guest": guest})
+    else:
+        form = forms.GuestForm(instance=guest)
+
+    return render(request, "guest/guest_edit.html", {"form": form, "guest": guest})
+
+@login_required
+def delete_guest(request, guest_id):
+    guest = get_object_or_404(models.Guests, pk=guest_id)
     
     if request.method == "POST":
         guest.delete()
-        messages.success(request, "Convidado Excluído")
+        messages.success(request, "Presente Excluído")
         return redirect("guest_list")
-        
-    return render(request, "guest/guest.html", {"guest": guest})
-
+    
 @login_required
 def guest_list(request):
     guest_list = models.Guests.objects.all()
-    return render(request, "guest/guests.html", {"guests": guest_list})
+    return render(request, "guest/guest_list.html", {"guests": guest_list})
 
 @login_required
 def import_guest_list(request):

@@ -241,14 +241,11 @@
         </p>
         
         <div class="action-buttons">
-            <a href="{% url 'guests' %}" class="action-card" 
+            <a href="{% url 'guest_list' %}" class="action-card" 
                role="button" 
                aria-label="Ver a lista de presentes">
                 <i class="fas fa-users card-icon" aria-hidden="true"></i>
                 <h2 class="card-title">Lista de Convidados</h2>
-                {% comment %} <p class="card-description">
-                    Confirme sua participação no evento
-                </p> {% endcomment %}
             </a>
             
             <a href="{% url 'gift_list' %}" class="action-card" 

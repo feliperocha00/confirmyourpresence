@@ -63,7 +63,7 @@
         </div>
         <h2 class="text-center flex-grow-1 mb-0" style="color: #3b6d50;">Convidados</h2>
         <div class="icon-links">
-            <a href="{% url 'import_guests' %}" title="Importar convidados">
+            <a href="{% url 'import_guest_list' %}" title="Importar convidados">
                 <i class="icon-links fa-solid fa-circle-plus"></i>
             </a>
         </div>
@@ -87,13 +87,15 @@
             {% endif %}
             {% for guest in guests %}
             <tr>
-                <form method="post" class="text-start" enctype="multipart/form-data">
+                <form method="post" class="text-start" action="{% url 'delete_guest' guest.id %}">
                     {% csrf_token %}
                     <td>
                         {{ forloop.counter }}
                     </td>
                     <td>
-                        {{ guest.name }}
+                        <a href="{% url 'guest_edit' guest.id %}" class="text-decoration-none text-dark">    
+                            {{ guest.name }}
+                        </a>
                     </td>
                     <td>
                         {{ guest.phone }}

@@ -14,9 +14,7 @@ urlpatterns = [
     path("confirm/success/", views.success, name="success"),
     path("confirmations/", views.confirmations, name="confirmations"),
     
-    path("guest/<int:guest_id>/", views.guest, name="guest"),
-    path("guest/<int:guest_id>/give/", views.guest, name="guest"),
-    path("guest/<int:guest_id>/edit/", views.edit_guest, name="edit_guest"),
+    path("guest/<int:guest_id>/edit/", views.guest_edit, name="guest_edit"),
     path("guest/<int:guest_id>/delete/", views.delete_guest, name="delete_guest"),
     path("guest_list/", views.guest_list, name="guest_list"),
     path("guest_list/import", views.import_guest_list, name="import_guest_list"),
