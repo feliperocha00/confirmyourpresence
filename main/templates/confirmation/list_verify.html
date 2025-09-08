@@ -21,8 +21,7 @@
 
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, rgba(91, 138, 111, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%),
-                    url('{% static "img/flowers_background.jpeg" %}');
+        background: linear-gradient(135deg, rgba(91, 138, 111, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -376,14 +375,14 @@
 {% endblock script %}
 {% block content %}
  <div class="form-container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    {% comment %} <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="icon-links">
             <a href="javascript:history.back()" title="Voltar">
                 <i class="icon-links fa-solid fa-chevron-left"></i>
             </a>
         </div>
-        <h1 class="form-title text-center flex-grow-1 mb-0">Você está na lista?</h1>
-    </div>
+    </div> {% endcomment %}
+    <h1 class="form-title text-center flex-grow-1 mb-0">Você está na lista?</h1>
         
     <form id="phoneForm" method="post">
         {% csrf_token %}
