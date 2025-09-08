@@ -110,7 +110,7 @@ def import_guests(request):
     return render(request, "guest/import_guests.html")
 
 def gift_list(request):
-    gifts = models.Gift.objects.all()
+    gifts = models.Gift.objects.all().order_by('price')
 
     return render(request, "gift/gift_list.html", {"gifts": gifts})
 
