@@ -431,7 +431,7 @@
         <div class="gift-list-container">
             <div class="header-section">
                 <h1 class="page-title">Lista de Presentes</h1>
-                
+{% comment %}                 
                 <div class="action-buttons">
                     <a href="{% url 'add_gift' %}" class="action-btn" title="Adicionar Presente" aria-label="Adicionar novo presente">
                         <i class="fas fa-plus" aria-hidden="true"></i>
@@ -440,7 +440,7 @@
                     <a href="{% url 'import_gifts' %}" class="action-btn" title="Importar Presentes" aria-label="Importar presentes">
                         <i class="fas fa-download" aria-hidden="true"></i>
                     </a>
-                </div>
+                </div> {% endcomment %}
             </div>
             
             {% if gifts %}

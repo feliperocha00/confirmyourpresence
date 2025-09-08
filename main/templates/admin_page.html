@@ -245,9 +245,6 @@
                aria-label="Ver a lista de presentes">
                 <i class="fas fa-users card-icon" aria-hidden="true"></i>
                 <h2 class="card-title">Lista de Convidados</h2>
-                {% comment %} <p class="card-description">
-                    Confirme sua participação no evento
-                </p> {% endcomment %}
             </a>
             
             <a href="{% url 'gift_list' %}" class="action-card" 
@@ -255,9 +252,6 @@
                aria-label="Ver a lista de presentes">
                 <i class="fas fa-gift card-icon" aria-hidden="true"></i>
                 <h2 class="card-title">Lista de Presentes</h2>
-                {% comment %} <p class="card-description">
-                    Explore nossa lista de sugestões
-                </p> {% endcomment %}
             </a>
             
             <a href="{% url 'confirmations' %}" class="action-card" 
@@ -265,9 +259,20 @@
                aria-label="Ver a lista de Confirmações de Presença">
                 <i class="fas fa-user-check card-icon" aria-hidden="true"></i>
                 <h2 class="card-title">Confirmações de Presença</h2>
-                {% comment %} <p class="card-description">
-                    Explore nossa lista de sugestões
-                </p> {% endcomment %}
+            </a>
+            
+            <a href="{% url 'add_gift' %}" class="action-card" 
+               role="button" 
+               aria-label="Adicionar um Presente">
+                <i class="fas fa-gift card-icon" aria-hidden="true"></i>
+                <h2 class="card-title">Adicionar um Presente</h2>
+            </a>
+
+            <a href="{% url 'import_gifts' %}" class="action-card" 
+               role="button" 
+               aria-label="Importar Lista de Presentes">
+                <i class="fas fa-download card-icon" aria-hidden="true"></i>
+                <h2 class="card-title">Importar Lista de Presentes</h2>
             </a>
         </div>
     </div>
