@@ -75,7 +75,6 @@
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Pai</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -99,10 +98,6 @@
                     {% if guest.parent %}
                     {{ guest.parent }}
                     {% endif %}
-                </td>
-                <td>
-                    <!-- TODO: delete button logic -->
-                    <i class="bi bi-trash"></i>
                 </td>
             </tr>
             {% endfor %}
