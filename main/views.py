@@ -128,6 +128,7 @@ def gift(request, gift_id):
 
     return render(request, "gift/gift.html", {"gift": gift, 'whatsapp_message': whatsapp_message})
 
+@login_required
 def edit_gift(request, gift_id):
     gift = get_object_or_404(models.Gift, pk=gift_id)
     
