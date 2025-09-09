@@ -51,18 +51,35 @@ class Guests(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def index_guests(file_reader):
+        header = []
+        index = []
+        for i, line in enumerate(file_reader):
+            dct = {}
+            if i == 0:
+                header = line
+                continue
+
+            for iv, value in enumerate(line):
+                dct[header[iv]] = value
+
+            index.add(dct)
+
+            name = line[0]
+            index.setdefault(name, []).append(line)
+        return index
            
     def import_guests(IoBytes):
+        existent_guests = Guests.objects.all()
         data_file = io.StringIO(IoBytes.getvalue().decode('utf-8'))
         data_file.seek(0)
         file_reader = []
         csv_reader = csv.reader(data_file, delimiter=',')
         file_reader.extend(csv_reader)
+        indexed_guests = Guests.index_guests(file_reader)
 
         for index, line in enumerate(file_reader):
-            if index == 0:
-                # Ignora o cabeçalho
-                continue
 
             name = line[1]
             phone = line[4]
