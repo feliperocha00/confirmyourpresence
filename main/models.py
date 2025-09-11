@@ -51,6 +51,31 @@ class Guests(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def remove_deleted_guests(indexed_guests, existent_guests):
+        indexed_names = [i['Nome'] for i in indexed_guests]
+        for e in existent_guests:
+            if e.name not in indexed_names:
+                childs = e.childs.all()
+                if childs:
+                    childs.delete()
+                e.delete()
+        return
+    
+    def index_guests(file_reader):
+        header = []
+        index = []
+        for i, line in enumerate(file_reader):
+            dct = {}
+            if i == 0:
+                header = line
+                continue
+
+            for iv, value in enumerate(line):
+                dct[header[iv]] = value
+
+            index.append(dct)
+        return index
            
     def import_guests(IoBytes):
         data_file = io.StringIO(IoBytes.getvalue().decode('utf-8'))
@@ -58,16 +83,16 @@ class Guests(models.Model):
         file_reader = []
         csv_reader = csv.reader(data_file, delimiter=',')
         file_reader.extend(csv_reader)
+        indexed_guests = Guests.index_guests(file_reader)
+        existent_guests = Guests.objects.all()
 
-        for index, line in enumerate(file_reader):
-            if index == 0:
-                # Ignora o cabeçalho
-                continue
+        Guests.remove_deleted_guests(indexed_guests, existent_guests)
 
-            name = line[1]
-            phone = line[4]
+        for line in indexed_guests:
+            name = line['Nome']
+            phone = line['Telefone']
             phone = re.sub(r'\D', '', phone)
-            parent = line[3]
+            parent = line['Pai']
             parent = Guests.objects.filter(name=parent).first() if parent else None
 
             if not Guests.objects.filter(name=name, phone=phone).exists():
