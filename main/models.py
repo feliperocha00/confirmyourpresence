@@ -44,6 +44,7 @@ class Guests(models.Model):
         on_delete=models.SET_NULL,
         related_name='childs'
     )
+    description = models.TextField("Descrição", blank=True)
     confirm = models.BooleanField(
         "Confirma a presença?",
         default=False
@@ -53,9 +54,9 @@ class Guests(models.Model):
         return self.name
     
     def remove_deleted_guests(indexed_guests, existent_guests):
-        indexed_names = [i['Nome'] for i in indexed_guests]
+        indexed_names = [(i['Nome'], i['Descrição']) for i in indexed_guests]
         for e in existent_guests:
-            if e.name not in indexed_names:
+            if (e.name, e.description) not in indexed_names:
                 childs = e.childs.all()
                 if childs:
                     childs.delete()
@@ -92,11 +93,12 @@ class Guests(models.Model):
             name = line['Nome']
             phone = line['Telefone']
             phone = re.sub(r'\D', '', phone)
+            description = line['Descrição']
             parent = line['Pai']
             parent = Guests.objects.filter(name=parent).first() if parent else None
 
-            if not Guests.objects.filter(name=name, phone=phone).exists():
-                Guests.objects.create(name=name, phone=phone, parent=parent)
+            if not Guests.objects.filter(name=name, description=description).exists():
+                Guests.objects.create(name=name, description=description, phone=phone, parent=parent)
 
 class Confirm(models.Model):
     name = models.CharField("Nome", max_length=200)
@@ -113,8 +115,8 @@ class Confirmations(models.Model):
 class Gift(models.Model):
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
-    image_url = models.URLField(max_length=500, null=True)
-    product_url = models.URLField(max_length=500, null=True)
+    image_url = models.URLField(max_length=500, null=True, blank=True)
+    product_url = models.URLField(max_length=500, null=True, blank=True)
     taken = models.BooleanField(default=False)
     
     def find_gift(self, gift_id):
