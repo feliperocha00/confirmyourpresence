@@ -95,7 +95,7 @@ class Guests(models.Model):
             phone = re.sub(r'\D', '', phone)
             description = line['Descrição']
             parent = line['Pai']
-            parent = Guests.objects.filter(name=parent).first() if parent else None
+            parent = Guests.objects.filter(name=parent, description=description).first() if parent else None
 
             if not Guests.objects.filter(name=name, description=description).exists():
                 Guests.objects.create(name=name, description=description, phone=phone, parent=parent)
