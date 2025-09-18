@@ -52,13 +52,14 @@ def confirm(request):
 
         for i in range(1, total_rows + 1):
             guest_name = request.POST.get(f'guest_name_{i}')
+            guest_description = request.POST.get(f'guest_description_{i}')
             guest_confirmation = request.POST.get(f'guest_confirmation_{i}')
             
             if guest_name:
                 is_confirmed = guest_confirmation is not None
 
                 try:
-                    guest = models.Guests.objects.get(name=guest_name)
+                    guest = models.Guests.objects.get(name=guest_name, description=guest_description)
                     guest.confirm = is_confirmed
                     guest.save()
                 except models.Guests.DoesNotExist:

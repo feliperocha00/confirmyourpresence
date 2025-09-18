@@ -255,6 +255,7 @@
                         <td>
                             {{ guest.name }}
                             <input type="hidden" name="guest_name_{{ forloop.counter }}" value="{{ guest.name }}">
+                            <input type="hidden" name="guest_description_{{ forloop.counter }}" value="{{ guest.description }}">
                         </td>
                         <td>
                             <label class="custom-checkbox">
