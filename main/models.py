@@ -35,7 +35,8 @@ class Guests(models.Model):
     name = models.CharField("Nome", max_length=12)
     phone = models.CharField(
         max_length=11,
-        validators=[RegexValidator(regex=r'^\d{10,11}$', message='Digite um número de telefone válido.')]
+        validators=[RegexValidator(regex=r'^\d{10,11}$', message='Digite um número de telefone válido.')],
+        default='', blank=True
     )
     parent = models.ForeignKey(
         'self',
@@ -44,7 +45,7 @@ class Guests(models.Model):
         on_delete=models.SET_NULL,
         related_name='childs'
     )
-    description = models.TextField("Descrição", blank=True)
+    description = models.TextField("Descrição", null=True, blank=True)
     confirm = models.BooleanField(
         "Confirma a presença?",
         default=False
