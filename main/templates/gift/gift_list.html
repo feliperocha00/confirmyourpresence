@@ -422,6 +422,12 @@
         color: var(--primary-green);
         margin-bottom: 1rem;
     }
+
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+    }
 </style>
 {% endblock style %}
 
@@ -431,23 +437,13 @@
         <div class="gift-list-container">
             <div class="header-section">
                 <h1 class="page-title">Lista de Presentes</h1>
-{% comment %}                 
-                <div class="action-buttons">
-                    <a href="{% url 'add_gift' %}" class="action-btn" title="Adicionar Presente" aria-label="Adicionar novo presente">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                    </a>
-
-                    <a href="{% url 'import_gifts' %}" class="action-btn" title="Importar Presentes" aria-label="Importar presentes">
-                        <i class="fas fa-download" aria-hidden="true"></i>
-                    </a>
-                </div> {% endcomment %}
             </div>
             
             {% if gifts %}
             <div class="gifts-grid">
                 {% for gift in gifts %}
                 <div class="gift-card {% if gift.taken %}taken{% endif %}" role="article" aria-labelledby="gift-{{ gift.id }}-title">
-                    <a href="{% url 'gift' gift.id %}" style="text-decoration: none; color: inherit; display: contents;">
+                    <a href="{% url 'gift' gift.id %}" {% if gift.taken %}class="disabled"{% endif %} style="text-decoration: none; color: inherit; display: contents;">
                         <img src="{{ gift.image_url }}" alt="{{ gift.name }}" class="gift-img" loading="lazy">
 
                         <h2 id="gift-{{ gift.id }}-title" class="gift-title">{{ gift.name }}</h2>
