@@ -130,6 +130,9 @@
                     <td colspan="3" class="text-center">Nenhuma confirmação.</td>
                 </tr>
                 {% endif %}
+                <h3>
+                    Confirmados: {{ confirmed_guests }}
+                </h3>
                 {% for guest in guests %}
                 <tr>
                     <td>

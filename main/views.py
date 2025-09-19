@@ -71,6 +71,7 @@ def confirm(request):
 @login_required
 def confirmations(request):
     guests = models.Guests.objects.all()
+    confirmed_guests = guests.filter(confirm=True).count()
 
     if request.method == "POST":        
         # Criar o workbook e a planilha
@@ -94,7 +95,7 @@ def confirmations(request):
         wb.save(response)
         return response
 
-    return render(request, "confirmation/confirmations.html", {"guests": guests})
+    return render(request, "confirmation/confirmations.html", {"guests": guests, "confirmed_guests": confirmed_guests})
 
 @login_required
 def guests(request):
