@@ -90,7 +90,9 @@
                     {{ forloop.counter }}
                 </td>
                 <td>
-                    {{ guest.name }}
+                    <a href="{% url 'edit_guest' guest.id %}" style="text-decoration: none; color: black;">
+                        {{ guest.name }}
+                    </a>
                 </td>
                 <td>
                     {{ guest.description }}
