@@ -14,6 +14,7 @@ urlpatterns = [
     path("confirmations/", views.confirmations, name="confirmations"),
     path("guests/", views.guests, name="guests"),
     path("guests/add", views.import_guests, name="import_guests"),
+    path("guest/<int:guest_id>/edit/", views.edit_guest, name="edit_guest"),
     path("gift_list/", views.gift_list, name="gift_list"),
     path("gift_list/add/", views.add_gift, name="add_gift"),
     path("gift_list/import/", views.import_gifts, name="import_gifts"),
