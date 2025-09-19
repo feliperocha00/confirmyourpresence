@@ -101,6 +101,20 @@ def guests(request):
     guest_list = models.Guests.objects.all()
     return render(request, "guest/guests.html", {"guests": guest_list})
     
+@login_required
+def edit_guest(request, guest_id):
+    guest = get_object_or_404(models.Guests, pk=guest_id)
+    
+    if request.method == "POST":
+        form = forms.GuestsForm(request.POST, instance=guest)
+        if form.is_valid():
+            guest.save()
+            return redirect('guests')
+    else:
+        form = forms.GuestsForm(instance=guest)
+
+    return render(request, "guest/edit_guest.html", {"form": form, "guest": guest})
+
 def import_guests(request):
     if request.method == "POST":
         IoBytes = request.FILES.get('file').file
