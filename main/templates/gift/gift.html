@@ -28,8 +28,17 @@
         border: none;
     }
 
+    .btn-taken {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+    }
+
     .btn-custom:hover {
         background-color: #386438ff;
+    }
+    .btn-taken:hover {
+        background-color: #525252ff;
     }
 
     h2 {
@@ -98,17 +107,27 @@
             {{ gift.product_url }}
         </div>
 
+        {% if not gift.taken %}
         <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
             <button type="button" class="btn btn-success"
                 onclick="window.open('https://wa.me/5511973436285?text={{ whatsapp_message|urlencode }}', '_blank')">
-             {% comment %} <i class="fa-solid fa-dollar-sign"></i> {% endcomment %}
-             Presentear o valor
+                <i class="fa-solid fa-dollar-sign"></i>
+                Presentear o valor
             </button>
             <button type="button" class="btn btn-custom"
                 onclick="window.open('{% url 'gift_redirect_warning' gift.id %}', '_blank')">
                 <i class="fas fa-link me-1"></i> Ver produto
             </button>
         </div>
+        {% else %} 
+        <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
+            <button type="button" class="btn btn-taken" disabled aria-label="Presente já foi escolhido por alguém">
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                Já presenteado
+            </button>
+        </div>
+        {% endif %}
+        
     </form>
 </div>
 {% endblock content %}
