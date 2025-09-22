@@ -422,15 +422,35 @@
         color: var(--primary-green);
         margin-bottom: 1rem;
     }
+    .icon-links a {
+        color: #3b6d50;
+        /* tom terroso para combinar com o tema */
+        font-size: 28px;
+        transition: color 0.3s ease;
+    }
+
+    .icon-links a:hover {
+        color: #386438ff;
+        /* tom mais escuro ao passar o mouse */
+    }
 </style>
 {% endblock style %}
 
 {% block content %}
 <div class="main-container">
     <div class="container-fluid">
+        
         <div class="gift-list-container">
             <div class="header-section">
                 <h1 class="page-title">Lista de Presentes</h1>
+                {% if user.is_authenticated and user.is_superuser %}
+                    
+                <div class="icon-links">
+                    <a href="{% url 'add_gift' %}" title="Adicionar presente">
+                        <i class="icon-links fa-solid fa-circle-plus"></i>
+                    </a>
+                </div>
+                {% endif %}
             </div>
             {% if gifts %}
             <div class="gifts-grid">
