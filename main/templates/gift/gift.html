@@ -102,10 +102,12 @@
             {{ gift.price }}
         </div>
 
+        {% if gift.product_url %}
         <div class="url-text mb-4">
             <label for="id_product_url" class="form-label">Link:</label>
             {{ gift.product_url }}
         </div>
+        {% endif %}
 
         {% if not gift.taken %}
         <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
@@ -114,10 +116,12 @@
                 <i class="fa-solid fa-dollar-sign"></i>
                 Presentear o valor
             </button>
+            {% if gift.product_url %}
             <button type="button" class="btn btn-custom"
                 onclick="window.open('{% url 'gift_redirect_warning' gift.id %}', '_blank')">
                 <i class="fas fa-link me-1"></i> Ver produto
             </button>
+            {% endif %}
         </div>
         {% else %} 
         <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
